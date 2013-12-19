@@ -38,6 +38,7 @@ public class PersonServiceImpl implements PersonService
 		return personDao.findByPrimaryKey(name);
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public List findAllPerson()
 	{	

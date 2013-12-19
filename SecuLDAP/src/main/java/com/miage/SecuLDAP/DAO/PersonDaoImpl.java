@@ -42,6 +42,7 @@ public class PersonDaoImpl implements PersonDao {
       return (Person) ldapTemplate.lookup(dn, getContextMapper());
    }
 
+   @SuppressWarnings("rawtypes")
    public List findAll() {
       EqualsFilter filter = new EqualsFilter("objectclass", "person");
       return ldapTemplate.search(DistinguishedName.EMPTY_PATH, filter.encode(), getContextMapper());

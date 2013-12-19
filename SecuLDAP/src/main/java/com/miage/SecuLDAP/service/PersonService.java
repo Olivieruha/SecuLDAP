@@ -12,6 +12,7 @@ public interface PersonService
 	public void updatePerson(Person person);
 	public void deletePerson(Person person);
 	public Person findByPrimaryKey(String name);
+	@SuppressWarnings("rawtypes")
 	public List findAllPerson();
 	public ContextMapper getContextMapper();
 	

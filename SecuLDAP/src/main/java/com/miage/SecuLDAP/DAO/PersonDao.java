@@ -17,6 +17,7 @@ public interface PersonDao
 	public void update(Person person);
 	public void delete(Person person);
 	public Person findByPrimaryKey(String name);
+	@SuppressWarnings("rawtypes")
 	public List findAll();
 	public ContextMapper getContextMapper();
 	public Name buildDn(Person person);
