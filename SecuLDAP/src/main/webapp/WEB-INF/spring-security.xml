@@ -6,14 +6,17 @@
 	http://www.springframework.org/schema/security 
 	http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 
-    <s:http>
-        <s:intercept-url pattern="/secure/extreme/**" access="ROLE_ADMIN"/>
-        <s:intercept-url pattern="/secure/**" access="IS_AUTHENTICATED_REMEMBERED" />
-        <s:intercept-url pattern="/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
-
-        <s:form-login />
+	<!--  Faire très attention à l'ordre des règles !!! -->
+    <s:http auto-config="true" use-expressions="true">
+     	<s:intercept-url pattern="/login" access="permitAll"/>
+     	<s:intercept-url pattern="/helpdesk/**" access="hasRole('ROLE_HELPDESK') or hasRole('ROLE_ADMIN')" /> 
+     	<s:intercept-url pattern="/groupmanager/**" access="hasRole('ROLE_GROUPMANAGER') or hasRole('ROLE_ADMIN')" />
+        <s:intercept-url pattern="/**" access="hasRole('ROLE_ADMIN')"/>
+           
+               
+        <s:form-login login-page="/login" username-parameter="username" password-parameter="password"/>
+		<s:logout logout-url="/logout" invalidate-session="true"/>
         <s:anonymous />
-        <s:logout />
     </s:http>
 
 

@@ -16,13 +16,18 @@ public class HomeController {
 		return new ModelAndView("home");
 	}
 	
-	@RequestMapping(value="/secure")
+	@RequestMapping(value="/helpdesk")
 	public ModelAndView testSecure(HttpServletResponse response) throws IOException{
-		return new ModelAndView("secure");
+		return new ModelAndView("helpdesk");
 	}
 	
-	@RequestMapping(value="/secure/extrem")
+	@RequestMapping(value="/groupmanager")
 	public ModelAndView testExtrem(HttpServletResponse response) throws IOException{
-		return new ModelAndView("extrem");
+		return new ModelAndView("groupmanager");
+	}
+	
+	@RequestMapping(value="/login")
+	public ModelAndView testLogin(HttpServletResponse response) throws IOException{
+		return new ModelAndView("login");
 	}
 }

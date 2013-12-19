@@ -4,9 +4,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Extrem secure page</title>
+<title>Helpdesk Page</title>
 </head>
 <body>
-	<h1>Welcome to the extremely secured page !</h1>
+	
 </body>
 </html>
