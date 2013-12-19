@@ -5,9 +5,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>GroupManager page</title>
+<title>Page User</title>
 </head>
 <body>
-	<a href="<c:url value="j_spring_security_logout" />" > Logout</a>
+		<a href="<c:url value="j_spring_security_logout" />" > Logout</a>
 </body>
 </html>

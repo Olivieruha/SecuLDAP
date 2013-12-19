@@ -11,11 +11,13 @@
      	<s:intercept-url pattern="/login" access="permitAll"/>
      	<s:intercept-url pattern="/helpdesk/**" access="hasRole('ROLE_HELPDESK') or hasRole('ROLE_ADMIN')" /> 
      	<s:intercept-url pattern="/groupmanager/**" access="hasRole('ROLE_GROUPMANAGER') or hasRole('ROLE_ADMIN')" />
+     	<s:intercept-url pattern="/user/**" access="isAuthenticated()"/>
         <s:intercept-url pattern="/**" access="hasRole('ROLE_ADMIN')"/>
+        
            
                
-        <s:form-login login-page="/login" username-parameter="username" password-parameter="password"/>
-		<s:logout logout-url="/logout" invalidate-session="true"/>
+        <s:form-login login-page="/login" username-parameter="username" password-parameter="password" />
+		<s:logout logout-success-url="/login" invalidate-session="true" delete-cookies="JSEESIONID" />
         <s:anonymous />
     </s:http>
 

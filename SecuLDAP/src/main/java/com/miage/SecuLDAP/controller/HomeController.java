@@ -30,4 +30,9 @@ public class HomeController {
 	public ModelAndView testLogin(HttpServletResponse response) throws IOException{
 		return new ModelAndView("login");
 	}
+	
+	@RequestMapping(value="/user")
+	public ModelAndView testUser(HttpServletResponse response) throws IOException{
+		return new ModelAndView("user");
+	}
 }
