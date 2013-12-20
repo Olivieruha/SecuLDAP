@@ -8,6 +8,22 @@ public class Person
 	private String fullName;
 	private String userPassword;
 	
+	public Person(String firstName, String lastName, String userPassword)
+	{
+		this.uid = null;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.fullName = firstName+"."+lastName;
+		this.userPassword = userPassword;
+	}
+	
+	public Person()
+	{
+		this(null, null, null);
+		this.fullName = null;
+		this.uid = null;
+	}
+	
 	public String getUserPassword()
 	{
 		return userPassword;

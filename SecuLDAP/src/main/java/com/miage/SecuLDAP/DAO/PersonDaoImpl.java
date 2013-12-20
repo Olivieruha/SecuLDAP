@@ -76,6 +76,7 @@ public class PersonDaoImpl implements PersonDao {
          Person person = new Person();
          person.setFullName(context.getStringAttribute("cn"));
          person.setLastName(context.getStringAttribute("sn"));
+         person.setUserPassword(context.getStringAttribute("userPassword"));
          return person;
       }
    }
