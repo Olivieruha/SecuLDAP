@@ -1,5 +1,6 @@
 package com.miage.SecuLDAP.DAO;
 
+import java.util.Collection;
 import java.util.List;
 
 import javax.naming.Name;
@@ -9,6 +10,10 @@ import org.springframework.ldap.core.DirContextAdapter;
 import org.springframework.ldap.core.DistinguishedName;
 import org.springframework.ldap.core.LdapTemplate;
 import org.springframework.ldap.filter.EqualsFilter;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.ldap.authentication.LdapAuthenticationProvider;
+import org.springframework.security.ldap.userdetails.InetOrgPersonContextMapper;
 
 import com.miage.SecuLDAP.model.Person;
 
@@ -22,8 +27,11 @@ public class PersonDaoImpl implements PersonDao {
 
    public void create(Person person) {
       DirContextAdapter context = new DirContextAdapter();
+      System.out.println("Contexte ok");
       mapToContext(person, context);
+      System.out.println("Mapping ok");
       ldapTemplate.bind(buildDn(person), context, null);
+      System.out.println("Binding ok");
    }
 
    public void update(Person person) {

@@ -43,6 +43,7 @@
     
     <bean id="contextSource" class="org.springframework.security.ldap.DefaultSpringSecurityContextSource">
         <constructor-arg value="ldap://localhost:10389/dc=example,dc=com"/>
+        <property name="dirObjectFactory" value="org.springframework.ldap.core.support.DefaultDirObjectFactory"/>
     </bean>
 
     <bean id="secondLdapProvider" class="org.springframework.security.ldap.authentication.LdapAuthenticationProvider">
@@ -70,4 +71,12 @@
             </bean>
         </constructor-arg>
     </bean>
+    <bean id="ldapTemplate"
+      class="org.springframework.ldap.core.LdapTemplate">
+      <constructor-arg ref="contextSource" />
+   </bean>
+    <bean id="personDao"
+      class="com.miage.SecuLDAP.DAO.PersonDaoImpl">
+      <property name="ldapTemplate" ref="ldapTemplate" />
+   </bean>
 </beans>

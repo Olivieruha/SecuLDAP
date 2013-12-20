@@ -9,8 +9,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.miage.SecuLDAP.model.Person;
+import com.miage.SecuLDAP.service.PersonService;
+import com.miage.SecuLDAP.service.PersonServiceImpl;
+
 @Controller
 public class HomeController {
+	
+	PersonServiceImpl psi;
 
 	@RequestMapping(value="/admin")
 	public ModelAndView test(HttpServletResponse response) throws IOException{
@@ -29,6 +35,8 @@ public class HomeController {
 	
 	@RequestMapping(value="/user")
 	public ModelAndView testUser(HttpServletResponse response) throws IOException{
+		Person p = new Person("titi", "toto", "tata");
+		psi.createPerson(p);
 		return new ModelAndView("user");
 	}
 	
