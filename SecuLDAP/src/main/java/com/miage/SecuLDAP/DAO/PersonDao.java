@@ -17,7 +17,8 @@ public interface PersonDao
 	public void update(Person person);
 	public void delete(Person person);
 	public Person findByPrimaryKey(String name);
-	public List findAll();
+	public Person findByDistinguishedName(String dn);
+	public List<?> findAll();
 	public ContextMapper getContextMapper();
 	public Name buildDn(Person person);
 	public Name buildDn(String fullname);

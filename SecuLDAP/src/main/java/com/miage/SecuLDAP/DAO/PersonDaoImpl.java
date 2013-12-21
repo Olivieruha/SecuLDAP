@@ -26,11 +26,8 @@ public class PersonDaoImpl implements PersonDao {
 
    public void create(Person person) {
       DirContextAdapter context = new DirContextAdapter();
-      System.out.println("Contexte ok");
       mapToContext(person, context);
-      System.out.println("Mapping ok");
       ldapTemplate.bind(buildDn(person), context, null);
-      System.out.println("Binding ok");
    }
 
    public void update(Person person) {
@@ -48,8 +45,12 @@ public class PersonDaoImpl implements PersonDao {
       Name dn = buildDn(name);
       return (Person) ldapTemplate.lookup(dn, getContextMapper());
    }
+   
+   public Person findByDistinguishedName(String dn) {
+	   return (Person) ldapTemplate.lookup(dn, getContextMapper());
+   }
 
-   public List findAll() {
+   public List<?> findAll() {
       EqualsFilter filter = new EqualsFilter("objectclass", "person");
       return ldapTemplate.search(DistinguishedName.EMPTY_PATH, filter.encode(), getContextMapper());
    }
@@ -72,7 +73,7 @@ public class PersonDaoImpl implements PersonDao {
    }
 
    public void mapToContext(Person person, DirContextAdapter context) {
-      context.setAttributeValues("objectclass", new String[] {"inetOrgPerson", "organizationalPerson", "person", "top"});
+      context.setAttributeValues("objectClass", new String[] {"inetOrgPerson", "organizationalPerson", "person", "top"});
       context.setAttributeValue("cn", person.getFullName());
       context.setAttributeValue("sn", person.getLastName());
       context.setAttributeValue("userPassword", person.getUserPassword());

@@ -13,6 +13,7 @@ import org.springframework.ldap.filter.EqualsFilter;
 import org.springframework.stereotype.Repository;
 
 import com.miage.SecuLDAP.model.Group;
+import com.miage.SecuLDAP.model.Person;
 
 @Repository("groupDao")
 public class GroupDaoImpl implements GroupDao {
@@ -52,7 +53,7 @@ public class GroupDaoImpl implements GroupDao {
 	}
 
 	@Override
-	public List findAll() {
+	public List<?> findAll() {
 		EqualsFilter filter = new EqualsFilter("objectclass", "groupOfNames");
 	    return ldapTemplate.search(DistinguishedName.EMPTY_PATH, filter.encode(), getContextMapper());
 	}
@@ -81,19 +82,20 @@ public class GroupDaoImpl implements GroupDao {
 	public void mapToContext(Group group, DirContextAdapter context) {
 		context.setAttributeValues("objectclass", new String[] {"groupOfNames", "top"});
 	    context.setAttributeValue("cn", group.getGroupName());
-	    // A completer
+	    
+	    for(Person person : group.getGroupMembers())
+	    	context.addAttributeValue("member", person.toString(), false);
 	}
 	
-	   private static class GroupContextMapper implements ContextMapper 
-	   {	
-	      public Object mapFromContext(Object ctx) 
-	      {
-	         DirContextAdapter context = (DirContextAdapter)ctx;
-	         Group group = new Group();
-	         group.setGroupName(context.getStringAttribute("cn"));
-	         // A completer
-	         return group;
-	      }
-	   }
-
+   private static class GroupContextMapper implements ContextMapper 
+   {	
+      public Object mapFromContext(Object ctx) 
+      {
+         DirContextAdapter context = (DirContextAdapter)ctx;
+         Group group = new Group();
+         group.setGroupName(context.getStringAttribute("cn"));              
+         group.setArrayDnMembers(context.getStringAttributes("member"));
+         return group;
+      }
+   }
 }

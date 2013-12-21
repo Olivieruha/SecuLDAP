@@ -6,9 +6,16 @@ public class Person
 	private String fullName;
 	private String userPassword;
 	
+	public String toString() {
+		StringBuilder sB = new StringBuilder();
+		sB.append("cn=").append(fullName).append(",ou=users,dc=example,dc=com");
+		return sB.toString();
+	}
+	
 	public String getUserPassword() {
 		return userPassword;
 	}
+	
 	public void setUserPassword(String userPassword) {
 		this.userPassword = userPassword;
 	}

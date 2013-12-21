@@ -9,7 +9,6 @@ import org.springframework.ldap.core.DirContextAdapter;
 import org.springframework.ldap.core.LdapTemplate;
 
 import com.miage.SecuLDAP.model.Group;
-import com.miage.SecuLDAP.model.Person;
 
 public interface GroupDao {
 	public void setLdapTemplate(LdapTemplate ldapTemplate);
@@ -17,7 +16,7 @@ public interface GroupDao {
 	public void update(Group group);
 	public void delete(Group group);
 	public Group findByPrimaryKey(String name);
-	public List findAll();
+	public List<?> findAll();
 	public ContextMapper getContextMapper();
 	public Name buildDn(Group group);
 	public Name buildDn(String fullGroupName);

@@ -3,7 +3,6 @@ package com.miage.SecuLDAP.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ldap.core.ContextMapper;
 import org.springframework.stereotype.Service;
 
 import com.miage.SecuLDAP.DAO.PersonDao;
@@ -23,28 +22,25 @@ public class PersonServiceImpl implements PersonService {
 	@Override
 	public void updatePerson(Person person) {
 		personDao.update(person);
-
 	}
 
 	@Override
 	public void deletePerson(Person person) {
 		personDao.delete(person);
-
 	}
 
 	@Override
 	public Person findByPrimaryKey(String name) {
 		return personDao.findByPrimaryKey(name);
 	}
-
-	@SuppressWarnings("rawtypes")
+	
 	@Override
-	public List findAllPerson() {	
-		return personDao.findAll();
+	public Person findByDistinguishedName(String dn) {
+		return personDao.findByDistinguishedName(dn);
 	}
 
 	@Override
-	public ContextMapper getContextMapper() {		
-		return personDao.getContextMapper();
+	public List<?> findAllPerson() {	
+		return personDao.findAll();
 	}
 }

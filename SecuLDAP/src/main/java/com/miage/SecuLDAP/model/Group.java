@@ -5,7 +5,7 @@ import java.util.List;
 public class Group {
 	private String groupName;
 	private List<Person> groupMembers;
-	
+	private String[] arrayDnMembers;
 	public String getGroupName() {
 		return groupName;
 	}
@@ -13,12 +13,20 @@ public class Group {
 	public void setGroupName(String groupName) {
 		this.groupName = groupName;
 	}
-	
-	public List<Person> getGroupMember() {
+
+	public List<Person> getGroupMembers() {
 		return groupMembers;
 	}
-	
-	public void setGroupMember(List<Person> groupMember) {
-		this.groupMembers = groupMember;
-	}	
+
+	public void setGroupMembers(List<Person> groupMembers) {
+		this.groupMembers = groupMembers;
+	}
+
+	public String[] getArrayDnMembers() {
+		return arrayDnMembers;
+	}
+
+	public void setArrayDnMembers(String[] arrayDnMembers) {
+		this.arrayDnMembers = arrayDnMembers;
+	}
 }
