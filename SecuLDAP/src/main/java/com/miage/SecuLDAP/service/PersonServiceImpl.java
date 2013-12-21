@@ -10,54 +10,41 @@ import com.miage.SecuLDAP.DAO.PersonDao;
 import com.miage.SecuLDAP.model.Person;
 
 @Service
-public class PersonServiceImpl implements PersonService
-{
+public class PersonServiceImpl implements PersonService {
 
 	@Autowired
 	private PersonDao personDao;
 	
-	public void test()
-	{
-		personDao.test();
-	}
-	
 	@Override
-	public void createPerson(Person person)
-	{
+	public void createPerson(Person person) {
 		personDao.create(person);
 	}
 
 	@Override
-	public void updatePerson(Person person)
-	{
+	public void updatePerson(Person person) {
 		personDao.update(person);
 
 	}
 
 	@Override
-	public void deletePerson(Person person)
-	{
+	public void deletePerson(Person person) {
 		personDao.delete(person);
 
 	}
 
 	@Override
-	public Person findByPrimaryKey(String name)
-	{
+	public Person findByPrimaryKey(String name) {
 		return personDao.findByPrimaryKey(name);
 	}
 
 	@SuppressWarnings("rawtypes")
 	@Override
-	public List findAllPerson()
-	{	
+	public List findAllPerson() {	
 		return personDao.findAll();
 	}
 
 	@Override
-	public ContextMapper getContextMapper()
-	{		
+	public ContextMapper getContextMapper() {		
 		return personDao.getContextMapper();
 	}
-
 }

@@ -19,10 +19,6 @@ public class PersonDaoImpl implements PersonDao {
 	
 	@Autowired
    private LdapTemplate ldapTemplate;
-
-   public void test() {
-	   System.out.println("test");
-   }
    
    public void setLdapTemplate(LdapTemplate ldapTemplate) {
       this.ldapTemplate = ldapTemplate;
@@ -50,11 +46,6 @@ public class PersonDaoImpl implements PersonDao {
 
    public Person findByPrimaryKey(String name) {
       Name dn = buildDn(name);
-      System.out.println("Building Dn ok : dn = "+dn);
-      /*if(getContextMapper() == null) System.out.println("Context mapper null");
-      else System.out.println("Context mapper ok");*/
-      if(ldapTemplate == null)System.out.println("Ldaptemplate null");
-      else System.out.println("Ldaptemplate ok");
       return (Person) ldapTemplate.lookup(dn, getContextMapper());
    }
 

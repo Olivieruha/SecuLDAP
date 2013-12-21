@@ -19,7 +19,7 @@ import com.miage.SecuLDAP.service.PersonService;
 public class HomeController {
 	
 	@Autowired
-	PersonService psi;
+	PersonService personService;
 
 	@RequestMapping(value="/admin")
 	public ModelAndView test(HttpServletResponse response) throws IOException{
@@ -38,19 +38,17 @@ public class HomeController {
 	
 	@RequestMapping(value="/user")
 	public ModelAndView testUser(HttpServletResponse response, HttpServletRequest request) throws IOException{
+		// Permet de récupérer les informations d'identification
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String name = auth.getName();
-		//System.out.println(name);
-		System.out.println("setLdapTemplate ok");
 		
-		Person p = psi.findByPrimaryKey(name);		 
-		 if(p == null) System.out.println("person est null");
-		 else System.out.println("person ok");
-		 System.out.println(p.getLastName());
+		// Création de la personne récupérée dans l'annuaire LDAP
+		// Pour récupérer d'autre information, voir le ContextMapper dans la DAO
+		Person p = personService.findByPrimaryKey(name);		 
+		System.out.println(p.getLastName());
 		
 		return new ModelAndView("user");
 	}
-	
 	
 	@RequestMapping(value="/login")
 	public ModelAndView login(HttpServletResponse response) throws IOException{

@@ -23,5 +23,4 @@ public interface PersonDao
 	public Name buildDn(Person person);
 	public Name buildDn(String fullname);
 	public void mapToContext(Person person, DirContextAdapter context);
-	public void test();
 }
