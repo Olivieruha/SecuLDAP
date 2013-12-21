@@ -8,18 +8,18 @@ import org.springframework.ldap.core.ContextMapper;
 import org.springframework.ldap.core.DirContextAdapter;
 import org.springframework.ldap.core.LdapTemplate;
 
+import com.miage.SecuLDAP.model.Group;
 import com.miage.SecuLDAP.model.Person;
 
-public interface PersonDao
-{
+public interface GroupDao {
 	public void setLdapTemplate(LdapTemplate ldapTemplate);
-	public void create(Person person);
-	public void update(Person person);
-	public void delete(Person person);
-	public Person findByPrimaryKey(String name);
+	public void create(Group group);
+	public void update(Group group);
+	public void delete(Group group);
+	public Group findByPrimaryKey(String name);
 	public List findAll();
 	public ContextMapper getContextMapper();
-	public Name buildDn(Person person);
-	public Name buildDn(String fullname);
-	public void mapToContext(Person person, DirContextAdapter context);
+	public Name buildDn(Group group);
+	public Name buildDn(String fullGroupName);
+	public void mapToContext(Group group, DirContextAdapter context);
 }

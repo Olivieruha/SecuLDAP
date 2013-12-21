@@ -1,6 +1,7 @@
 package com.miage.SecuLDAP.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,11 +24,18 @@ public class HomeController {
 
 	@RequestMapping(value="/admin")
 	public ModelAndView test(HttpServletResponse response) throws IOException{
+		List<Person> listPerson = personService.findAllPerson();
+		for(Person p : listPerson) System.out.println(p.getFullName());
 		return new ModelAndView("admin");
 	}
 	
 	@RequestMapping(value="/helpdesk")
 	public ModelAndView testSecure(HttpServletResponse response) throws IOException{
+		Person person = new Person();
+		person.setFullName("mehdi.belage");
+		//person.setUserPassword("coucou");
+		person.setLastName("belage");
+		personService.deletePerson(person);
 		return new ModelAndView("helpdesk");
 	}
 	

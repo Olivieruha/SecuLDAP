@@ -49,7 +49,6 @@ public class PersonDaoImpl implements PersonDao {
       return (Person) ldapTemplate.lookup(dn, getContextMapper());
    }
 
-   @SuppressWarnings("rawtypes")
    public List findAll() {
       EqualsFilter filter = new EqualsFilter("objectclass", "person");
       return ldapTemplate.search(DistinguishedName.EMPTY_PATH, filter.encode(), getContextMapper());
@@ -73,9 +72,10 @@ public class PersonDaoImpl implements PersonDao {
    }
 
    public void mapToContext(Person person, DirContextAdapter context) {
-      context.setAttributeValues("objectclass", new String[] {"inetOrgPerson", "organizationalPerson", "person", "top", "userPassword"});
+      context.setAttributeValues("objectclass", new String[] {"inetOrgPerson", "organizationalPerson", "person", "top"});
       context.setAttributeValue("cn", person.getFullName());
       context.setAttributeValue("sn", person.getLastName());
+      context.setAttributeValue("userPassword", person.getUserPassword());
    }
 
    private static class PersonContextMapper implements ContextMapper 
@@ -86,7 +86,6 @@ public class PersonDaoImpl implements PersonDao {
          Person person = new Person();
          person.setFullName(context.getStringAttribute("cn"));
          person.setLastName(context.getStringAttribute("sn"));
-         person.setUserPassword(context.getStringAttribute("userPassword"));
          return person;
       }
    }
