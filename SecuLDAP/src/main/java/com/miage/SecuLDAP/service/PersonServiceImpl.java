@@ -2,17 +2,19 @@ package com.miage.SecuLDAP.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ldap.core.ContextMapper;
-import org.springframework.ldap.core.LdapTemplate;
+import org.springframework.stereotype.Service;
 
 import com.miage.SecuLDAP.DAO.PersonDao;
-import com.miage.SecuLDAP.DAO.PersonDaoImpl;
 import com.miage.SecuLDAP.model.Person;
 
+@Service
 public class PersonServiceImpl implements PersonService
 {
 
-	private PersonDao personDao = new PersonDaoImpl();
+	@Autowired
+	private PersonDao personDao;
 	
 	public void test()
 	{

@@ -4,17 +4,21 @@ import java.util.List;
 
 import javax.naming.Name;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ldap.core.ContextMapper;
-import org.springframework.ldap.core.ContextSource;
 import org.springframework.ldap.core.DirContextAdapter;
 import org.springframework.ldap.core.DistinguishedName;
 import org.springframework.ldap.core.LdapTemplate;
 import org.springframework.ldap.filter.EqualsFilter;
+import org.springframework.stereotype.Repository;
 
 import com.miage.SecuLDAP.model.Person;
 
+@Repository("personDao")
 public class PersonDaoImpl implements PersonDao {
-   private LdapTemplate ldapTemplate = new LdapTemplate((ContextSource) getContextMapper());
+	
+	@Autowired
+   private LdapTemplate ldapTemplate;
 
    public void test() {
 	   System.out.println("test");
@@ -47,8 +51,8 @@ public class PersonDaoImpl implements PersonDao {
    public Person findByPrimaryKey(String name) {
       Name dn = buildDn(name);
       System.out.println("Building Dn ok : dn = "+dn);
-      if(getContextMapper() == null) System.out.println("Context mapper null");
-      else System.out.println("Context mapper ok");
+      /*if(getContextMapper() == null) System.out.println("Context mapper null");
+      else System.out.println("Context mapper ok");*/
       if(ldapTemplate == null)System.out.println("Ldaptemplate null");
       else System.out.println("Ldaptemplate ok");
       return (Person) ldapTemplate.lookup(dn, getContextMapper());
