@@ -9,5 +9,5 @@ public interface GroupService {
 	public void updateGroup(Group group);
 	public void deleteGroup(Group group);
 	public Group findByPrimaryKey(String name);
-	public List findAllGroup();
+	public List<Group> findAllGroup();
 }

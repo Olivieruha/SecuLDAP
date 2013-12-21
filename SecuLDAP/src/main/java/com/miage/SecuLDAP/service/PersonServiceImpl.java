@@ -1,7 +1,6 @@
 package com.miage.SecuLDAP.service;
 
-import java.util.List;
-
+import java.util.LinkedList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,8 +38,10 @@ public class PersonServiceImpl implements PersonService {
 		return personDao.findByDistinguishedName(dn);
 	}
 
+
+	@SuppressWarnings("unchecked")
 	@Override
-	public List<?> findAllPerson() {	
-		return personDao.findAll();
+	public LinkedList<Person> findAllPerson() {	
+		return (LinkedList<Person>) personDao.findAll();
 	}
 }

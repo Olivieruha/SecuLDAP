@@ -11,5 +11,5 @@ public interface PersonService
 	public void deletePerson(Person person);
 	public Person findByPrimaryKey(String name);
 	public Person findByDistinguishedName(String dn);
-	public List findAllPerson();
+	public List<Person> findAllPerson();
 }

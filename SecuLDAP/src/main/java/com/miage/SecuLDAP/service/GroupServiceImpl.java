@@ -1,6 +1,6 @@
 package com.miage.SecuLDAP.service;
 
-import java.util.List;
+import java.util.LinkedList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,8 +34,9 @@ public class GroupServiceImpl implements GroupService {
 		return groupDao.findByPrimaryKey(name);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public List<?> findAllGroup() {
-		return groupDao.findAll();
+	public LinkedList<Group> findAllGroup() {
+		return (LinkedList<Group>) groupDao.findAll();
 	}
 }

@@ -1,7 +1,6 @@
 package com.miage.SecuLDAP.controller;
 
 import java.io.IOException;
-import java.util.LinkedList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -49,7 +48,7 @@ public class HomeController {
 		
 		/**
 		 * Test de la création d'un groupe
-		 * Un groupe est composé de son nom et d'une liste de personne
+		 * Un groupe est composé de son nom et d'une liste de personnes
 		 * Un groupe ne doit pas être vide (i.e avoir une liste de personne vide à la création) !!! => plantage + exception
 		 * @TODO lorsque l'on crée un groupe  (avec un ou plusieurs membres), si le ou les membres n'existent pas, il faut :
 		 * - soit le ou les créer
