@@ -3,14 +3,21 @@ package com.miage.SecuLDAP.service;
 import java.util.List;
 
 import org.springframework.ldap.core.ContextMapper;
+import org.springframework.ldap.core.LdapTemplate;
 
 import com.miage.SecuLDAP.DAO.PersonDao;
+import com.miage.SecuLDAP.DAO.PersonDaoImpl;
 import com.miage.SecuLDAP.model.Person;
 
 public class PersonServiceImpl implements PersonService
 {
 
-	private PersonDao personDao;
+	private PersonDao personDao = new PersonDaoImpl();
+	
+	public void test()
+	{
+		personDao.test();
+	}
 	
 	@Override
 	public void createPerson(Person person)

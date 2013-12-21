@@ -1,26 +1,25 @@
 package com.miage.SecuLDAP.DAO;
 
-import java.util.Collection;
 import java.util.List;
 
 import javax.naming.Name;
 
 import org.springframework.ldap.core.ContextMapper;
+import org.springframework.ldap.core.ContextSource;
 import org.springframework.ldap.core.DirContextAdapter;
 import org.springframework.ldap.core.DistinguishedName;
 import org.springframework.ldap.core.LdapTemplate;
 import org.springframework.ldap.filter.EqualsFilter;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.ldap.authentication.LdapAuthenticationProvider;
-import org.springframework.security.ldap.userdetails.InetOrgPersonContextMapper;
 
 import com.miage.SecuLDAP.model.Person;
 
-
 public class PersonDaoImpl implements PersonDao {
-   private LdapTemplate ldapTemplate;
+   private LdapTemplate ldapTemplate = new LdapTemplate((ContextSource) getContextMapper());
 
+   public void test() {
+	   System.out.println("test");
+   }
+   
    public void setLdapTemplate(LdapTemplate ldapTemplate) {
       this.ldapTemplate = ldapTemplate;
    }
@@ -47,6 +46,11 @@ public class PersonDaoImpl implements PersonDao {
 
    public Person findByPrimaryKey(String name) {
       Name dn = buildDn(name);
+      System.out.println("Building Dn ok : dn = "+dn);
+      if(getContextMapper() == null) System.out.println("Context mapper null");
+      else System.out.println("Context mapper ok");
+      if(ldapTemplate == null)System.out.println("Ldaptemplate null");
+      else System.out.println("Ldaptemplate ok");
       return (Person) ldapTemplate.lookup(dn, getContextMapper());
    }
 
@@ -66,6 +70,9 @@ public class PersonDaoImpl implements PersonDao {
 
    public Name buildDn(String fullname) {
       DistinguishedName dn = new DistinguishedName();
+      dn.add("dc","com");
+      dn.add("dc", "example");
+      dn.add("ou", "users");
       dn.add("cn", fullname);
       return dn;
    }
@@ -77,7 +84,7 @@ public class PersonDaoImpl implements PersonDao {
    }
 
    private static class PersonContextMapper implements ContextMapper 
-   {
+   {	
       public Object mapFromContext(Object ctx) 
       {
          DirContextAdapter context = (DirContextAdapter)ctx;
