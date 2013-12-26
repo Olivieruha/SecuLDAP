@@ -35,7 +35,7 @@ public class GroupManagerController {
 		 * - soit le ou les créer
 		 * - soit obliger le créateur du groupe à selectionner un membre déjà existant dans l'AD
 		 */
-		Group group = new Group();
+		/*Group group = new Group();
 		group.setGroupName("test");
 		Person person = new Person();
 		person.setFullName("mehdi.belage");
@@ -44,7 +44,7 @@ public class GroupManagerController {
 		List<Person> groupMembers = new LinkedList<Person>();
 		groupMembers.add(person);
 		group.setGroupMembers(groupMembers);
-		groupService.createGroup(group);
+		groupService.createGroup(group);*/
 		
 		/**
 		 * Test afin de retrouver un group dans l'AD et récupérer les personnes qui le compose

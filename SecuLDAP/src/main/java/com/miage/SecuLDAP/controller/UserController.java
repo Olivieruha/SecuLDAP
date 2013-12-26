@@ -12,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.miage.SecuLDAP.model.Person;
 import com.miage.SecuLDAP.service.GroupService;
 import com.miage.SecuLDAP.service.PersonService;
 
@@ -31,10 +30,10 @@ public class UserController {
 		String name = auth.getName();
 		
 		// Création de la personne récupérée dans l'annuaire LDAP
-		// Pour récupérer d'autre information, voir le ContextMapper dans la DAO
-		Person p = personService.findByPrimaryKey(name);		 
-		System.out.println(p.getLastName());
+		// Pour récupérer d'autre information, voir le ContextMapper dans la DAO	 	
+		ModelAndView viewUser = new ModelAndView("user");
+		viewUser.addObject("person", personService.findByPrimaryKey(name));
 		
-		return new ModelAndView("user");
+		return viewUser;
 	}
 }

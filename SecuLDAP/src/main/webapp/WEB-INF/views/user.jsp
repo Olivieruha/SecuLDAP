@@ -8,7 +8,10 @@
 <title>Page User</title>
 </head>
 <body>
-		<p></p>
+		<p> Vous êtes : <br/>
+			Nom : ${person.lastName} <br/>
+			Identifiant : ${person.fullName}
+		</p>
 		<a href="<c:url value="j_spring_security_logout" />" > Logout</a>
 </body>
 </html>

@@ -11,6 +11,7 @@
 	<!--  Faire très attention à l'ordre des règles !!! -->
     <s:http auto-config="true" use-expressions="true" >
      	<s:intercept-url pattern="/login" access="permitAll"/>
+     	<s:intercept-url pattern="/resources/**" access="permitAll"/>
      	<s:intercept-url pattern="/redirection" access="isAuthenticated()"/>
      	<s:intercept-url pattern="/helpdesk/**" access="hasRole('ROLE_HELPDESK') or hasRole('ROLE_ADMIN')" /> 
      	<s:intercept-url pattern="/groupmanager/**" access="hasRole('ROLE_GROUPMANAGER') or hasRole('ROLE_ADMIN')" />
@@ -21,7 +22,6 @@
 		<s:logout logout-success-url="/login" invalidate-session="true" delete-cookies="JSESSIONID" />
         <s:anonymous />
     </s:http>
-
 
     <!-- Configuration du serveur LDAP pour Spring Security -->
     <s:ldap-server url="ldap://localhost:10389/dc=example,dc=com"
@@ -39,8 +39,7 @@
         />
     </s:authentication-manager>
 
-    <!-- Configuration du serveur LDAP pour Spring LDAP -->
-    
+    <!-- Configuration du serveur LDAP pour Spring LDAP -->    
     <bean id="contextSource" class="org.springframework.ldap.core.support.LdapContextSource">
         <property name="url" value="ldap://localhost:10389"/>
         <property name="userDn" value="uid=admin,ou=system"/>
