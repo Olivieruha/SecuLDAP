@@ -13,8 +13,8 @@
 <body>		
 	<form class="form-signin" method="post" action="j_spring_security_check">
         <h2 class="form-signin-heading">Veuillez vous identifier</h2>
-        <input type="text" name="username" class="form-control" placeholder="Nom d'utilisateur (prénom.nom)" required autofocus>
-        <input type="password" name="password" class="form-control" placeholder="Mot de passe" required>
+        <input type="text" name="username" class="form-control" placeholder="Nom d'utilisateur (prénom.nom)" required autofocus/>
+        <input type="password" name="password" class="form-control" placeholder="Mot de passe" required/>
         <c:if test="${not empty SPRING_SECURITY_LAST_EXCEPTION}">
       		<h4 style="color:red">Identifiant ou mot de passe incorrect !</h4>
       	</c:if>

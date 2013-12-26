@@ -33,6 +33,7 @@ public class PersonDaoImpl implements PersonDao {
    public void update(Person person) {
       Name dn = buildDn(person);
       DirContextAdapter context = (DirContextAdapter)ldapTemplate.lookup(dn);
+      //context.setUpdateMode(true);
       mapToContext(person, context);
       ldapTemplate.modifyAttributes(dn, context.getModificationItems());
    }
