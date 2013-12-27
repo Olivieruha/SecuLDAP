@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -28,37 +27,35 @@ public class UserController {
 	@Autowired
 	GroupService groupService;
 	
-	private static final String PASSWORD_PATTERN = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{8,20})";
+	private static final String PASSWORD_PATTERN = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%!?]).{8,20})";
 	private Pattern pattern = Pattern.compile(PASSWORD_PATTERN);
 	private Matcher matcher;
 	
 	@RequestMapping(value="/user")
 	public ModelAndView homeUser(HttpServletResponse response, HttpServletRequest request) throws IOException{
 		// Permet de récupérer les informations d'identification
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		
-		String name = auth.getName();
-		
+		String name = SecurityContextHolder.getContext().getAuthentication().getName();	
 		// Récupération de la personne qui s'est identifiée et insertion de celle-ci dans la vue 		
 		return new ModelAndView("users/user").addObject("person", personService.findByPrimaryKey(name));
 	}	
 	
 	@RequestMapping(value="/user/modifyPasswordForm", method=RequestMethod.POST)
-	public ModelAndView checkAndChangePassword(@ModelAttribute Person person) {
-		System.out.println(person.getFullName());
-		System.out.println(person.getUserPassword());
-		
-		//TODO : Ecrire le message d'erreur pour le mot de passe
-		matcher = pattern.matcher(person.getUserPassword());	
+	public ModelAndView checkAndChangePassword(@ModelAttribute Person person) {		
+		ModelAndView viewUser = new ModelAndView("users/user");	
+		//Test du mot de passe et message correspondant à la validité du test
+		matcher = pattern.matcher(person.getUserPassword());
+		String passwordUpdateMessage = "";
 		if(matcher.matches()) {
 			personService.updatePerson(person);
-		} else {
-			System.out.println("Mot de passe pas assez fort");
+			passwordUpdateMessage = "Mot de passe modifié avec succès !";
+		}
+		else {
+			//TODO customiser le message d'erreur
+			passwordUpdateMessage = "Mot de passe invalide...";
 		}
 		
-		ModelAndView viewUser = new ModelAndView("users/user");
-		viewUser.addObject("person", person);		
+		viewUser.addObject("passwordUpdateMessage", passwordUpdateMessage);	
+		viewUser.addObject("person", person);
 		return viewUser;
-
 	}
 }
