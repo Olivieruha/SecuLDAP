@@ -1,7 +1,6 @@
 package com.miage.SecuLDAP.controller;
 
 import java.io.IOException;
-
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +20,11 @@ public class HelpDeskController {
 	GroupService groupService;
 	
 	@RequestMapping(value="/helpdesk")
-	public ModelAndView testSecure(HttpServletResponse response) throws IOException{		
-		return new ModelAndView("helpdesk");
+	public ModelAndView testSecure(HttpServletResponse response) throws IOException{
+		ModelAndView viewHelpdesk = new ModelAndView("helpdesks/helpdesk");
+		viewHelpdesk.addObject("listPerson", personService.findAllPerson());
+		viewHelpdesk.addObject("listGroup", groupService.findAllGroup());
+		return viewHelpdesk;
 	}
 	
 }
