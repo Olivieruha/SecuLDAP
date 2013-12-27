@@ -13,7 +13,7 @@
     <div class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li class="active"><a class="lien-contenu" href="#accueil">Accueil</a></li>
-        <li><a class="lien-contenu" href="#apropos">A propos</a></li>
+        <li><a class="lien-contenu" href="#apropos">A propos</a></li> <!--  #Id donné dans la classe JSP -->
         <li><a class="lien-contenu" href="#contact">Contact</a></li>
         <!--<li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
