@@ -49,7 +49,7 @@ public class GroupManagerController {
 		/**
 		 * Test afin de retrouver un group dans l'AD et récupérer les personnes qui le compose
 		 */
-		/*Group group = groupService.findByPrimaryKey("admin");
+		Group group = groupService.findByPrimaryKey("admin");
 		
 		// Création de la liste des membres (ce sont des objets de type Person) grâce au tableau des Dn (arrayDnMembers) contenu dans le groupe
 		List<Person> groupMembers = new LinkedList<Person>();
@@ -61,7 +61,7 @@ public class GroupManagerController {
 		System.out.println(group.getGroupName());	
 		for(Person person : group.getGroupMembers())
 			System.out.println(person.getFullName());
-		*/
+		
 		/**
 		 * Test d'ajout d'un user à un groupe (permet de décrire la méthode d'ajout et donc, de suppression, de modification etc...
 		 * Attention !!! Même remarque que pour la création d'un groupe : il est possible d'ajouter au groupe un membre qui n'existe pas dans l'AD !!!
