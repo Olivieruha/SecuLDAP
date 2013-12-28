@@ -97,9 +97,13 @@ public class GroupManagerController {
 	}
 	@RequestMapping(value="/groupmanager/adduser")
 	public ModelAndView AddUser(HttpSession session, HttpServletRequest request, HttpServletResponse response, Person person) throws IOException{
+		//Création de la personne à ajouter
 		Person personToAdd = person;
+		//Mdp par défault, à corriger
 		personToAdd.setUserPassword("secret");
 		
+		//Ajout de la personne dans le group sélectionné
+		//NON fonctionnel
 		List<Group> listGroups = groupService.findAllGroup();
 		// Création de la liste des membres (ce sont des objets de type Person) grâce au tableau des Dn (arrayDnMembers) contenu dans le groupe	
 		for(Group group : listGroups)
@@ -113,9 +117,12 @@ public class GroupManagerController {
 			}
 			group.setGroupMembers(groupMembers);
 		}
+		//Ajout de la personne au LDAP, fonctionnel
 		personService.createPerson(personToAdd);
 		
-		/*Person personToAdd = person;
+		/*
+		//Non fonctionnel !
+		Person personToAdd = person;
 		personToAdd.setUserPassword("secret");
 		personService.createPerson(personToAdd);*/
 		/*
@@ -139,13 +146,21 @@ public class GroupManagerController {
 	
 	@RequestMapping(value="/groupmanager/addgroup")
 	public ModelAndView addgroup(HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException{	
-		System.out.println(request.getParameter("groupName"));
+		//Création du groupe à rajouter
 		Group groupToBeCreated = new Group();
 		groupToBeCreated.setGroupName(request.getParameter("groupName"));
-		List<Person> groupMembers = new LinkedList<Person>();
+		//Utilisateur obligatoire lors de la création d'un groupe
+		List<Person> groupMembers = new LinkedList<Person>();		
 		groupMembers.add(personService.findByPrimaryKey("jonathan.rubiero"));
 		groupToBeCreated.setGroupMembers(groupMembers);
+		//Ajout du groupe
 		groupService.createGroup(groupToBeCreated);
+		return new ModelAndView("redirect:/groupmanager");
+	}
+	
+	@RequestMapping(value="/groupmanager/removegroup")
+	public ModelAndView removegroup(HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException{	
+		groupService.deleteGroup(groupService.findByPrimaryKey(request.getParameter("groupName")));
 		return new ModelAndView("redirect:/groupmanager");
 	}
 	

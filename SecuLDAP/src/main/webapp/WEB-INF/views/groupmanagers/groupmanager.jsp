@@ -26,7 +26,12 @@
 		<a href="<c:url value="j_spring_security_logout" />"> Logout</a>
 	</th>
 		<c:forEach items="${groups}" var="g">
-			<th>${g.groupName}</th>
+			<th>${g.groupName}
+			<form action="/SecuLDAP/groupmanager/removegroup" method="POST">	
+				<input type="hidden" name="groupName" value="${g.groupName}" />	
+				<button type="submit" role="button" class="customer btn btn-danger btn-xs">Supprimer</button>
+			</form>		
+			</th>
 			<table class="table table-bordered well">	
 				<thead>
 					<tr>
@@ -47,7 +52,7 @@
 			    				</form>		
 			    				<form action="/SecuLDAP/groupmanager/modifyuser" method="POST">		
 				    				<button type="submit" role="button" class="btn btn-primary btn-xs">Modifier</button>
-			    				</form>		
+			    				</form>	
 			    			</th>
 			    		</tr>
 						</c:forEach>	
