@@ -6,6 +6,7 @@ public class Group {
 	private String groupName;
 	private List<Person> groupMembers;
 	private String[] arrayDnMembers;
+	
 	public String getGroupName() {
 		return groupName;
 	}

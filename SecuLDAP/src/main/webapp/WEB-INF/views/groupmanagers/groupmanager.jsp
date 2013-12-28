@@ -1,7 +1,8 @@
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -16,24 +17,53 @@
 <script src="/SecuLDAP/resources/design/js/jquery-1.10.min.js"></script>
 <script src="/SecuLDAP/resources/design/js/contenu.js"></script>
 <title>GroupManager page</title>
+
 </head>
+
 <body>
 
-	<a href="<c:url value="j_spring_security_logout" />"> Logout</a>
-	<table class="table table-striped table-bordered table-condensed"
-		data-provides="rowlink">
-		<tr>
-			<th>Groupes</th>
-			<th>Membres</th>
-		</tr>
+	<th>
+		<a href="<c:url value="j_spring_security_logout" />"> Logout</a>
+	</th>
 		<c:forEach items="${groups}" var="g">
-			<tr>
-				<th>${g.groupName}</th>
-				<c:forEach items="${g.groupMembers}" var="person">
-					<th>${person.fullName}</th>
-				</c:forEach>
-			</tr>
+			<th>${g.groupName}</th>
+			<table class="table table-bordered well">	
+				<thead>
+					<tr>
+						<th>User Name</th>
+						<th>First name</th>
+					</tr>
+				</thead>
+				<tbody>							
+						<c:forEach items="${g.groupMembers}" var="person">
+						<tr>
+							<th>${person.fullName}</th>
+							<th>${person.lastName}</th>
+							<th>
+								<form action="/SecuLDAP/groupmanager/removeuser" method="POST">	
+									<input type="hidden" name="fullName" value="${person.fullName}" />	
+									<input type="hidden" name="groupName" value="${g.groupName}" />	
+				    				<button type="submit" role="button" class="customer btn btn-danger btn-xs">Supprimer</button>
+			    				</form>		
+			    				<form action="/SecuLDAP/groupmanager/modifyuser" method="POST">		
+				    				<button type="submit" role="button" class="btn btn-primary btn-xs">Modifier</button>
+			    				</form>		
+			    			</th>
+			    		</tr>
+						</c:forEach>	
+				<form modelAttribute="person" action="/SecuLDAP/groupmanager/adduser" method="POST">
+					<input type="hidden" name="groupName" value="${g.groupName}" />	
+					<th><input path="fullName" type="text" name="fullName" class="form-control-fix" placeholder="User fullName"/></th>
+					<th><input path="lastName" type="text" name="lastName" class="form-control-fix" placeholder="User lastName"/></th>
+					<th><button type="submit" role="button" class="btn btn-primary btn-xs"">Ajouter</button></th>
+				</form>
+				</tbody>
+			</table>
 		</c:forEach>
-	</table>
+		
+	<form action="/SecuLDAP/groupmanager/addgroup" method="POST">	
+		<input path="groupName" type="text" name="groupName" class="form-control-fix" placeholder="Group Name"/>
+		<button type="submit" role="button" class="btn btn-primary btn-xs">Ajouter le groupe</button>
+	</form>	
 </body>
 </html>
