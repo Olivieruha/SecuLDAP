@@ -1,6 +1,5 @@
 
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ include file="groupmanagerheader.jsp" %>
@@ -63,7 +62,7 @@
 					<th><input path="fullName" type="text" name="fullName" class="form-control-fix" placeholder="User fullName"/></th>
 					<th><input path="lastName" type="text" name="lastName" class="form-control-fix" placeholder="User lastName"/></th>
 					<th><button type="submit" role="button" class="btn btn-primary btn-xs"">Ajouter</button></th>
-				</form>
+				</from>
 				</tbody>
 			</table>
 		</c:forEach>

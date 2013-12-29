@@ -26,7 +26,7 @@
 	</div>			
 
 	<div class="contenu cache jumbotron" id="apropos">
-		<p>L'a propos</p>
+		<p>L'à propos</p>
 	</div>
 	
 	<div class="contenu cache jumbotron" id="contact">
