@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ldap.NameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -99,15 +100,24 @@ public class GroupManagerController {
 	public ModelAndView AddUser(HttpSession session, HttpServletRequest request, HttpServletResponse response, Person person) throws IOException{
 		//Récupération du groupe
 		Person personToBeCreated = person;
-		personToBeCreated.setUserPassword("secret");
+		personToBeCreated.setUserPassword("sysmd7gd");
+		System.out.println(personToBeCreated.getFullName());
+		
+		try {
+			if(!person.getFullName().equals(personService.findByPrimaryKey(person.getFullName())));
+		} catch(NameNotFoundException nNFE) {
+			personService.createPerson(personToBeCreated);
+		}
+		
 		Group groupToBeUpdated = groupService.findByPrimaryKey(request.getParameter("groupName"));
 		List<Person> groupMembers = new LinkedList<Person>();
-		groupMembers = groupToBeUpdated.getGroupMembers();
+		for(int i = 0 ; i < groupToBeUpdated.getArrayDnMembers().length ; ++i)
+			groupMembers.add(personService.findByDistinguishedName((groupToBeUpdated.getArrayDnMembers()[i])));
 		groupMembers.add(personToBeCreated);
 		groupToBeUpdated.setGroupMembers(groupMembers);
-		for( int i=0; i<groupMembers.size(); i++)
-		{
-			System.out.println(groupMembers.get(i).getFullName()+ " "+groupToBeUpdated.getArrayDnMembers()[i]);
+
+		for(Person p : groupToBeUpdated.getGroupMembers()) {
+			System.out.println(p.getFullName());
 		}
 		groupService.updateGroup(groupToBeUpdated);
 		/*

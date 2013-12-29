@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -30,7 +29,7 @@ public class HelpDeskController {
 	}
 	
 	@RequestMapping(value="/helpdesk/deleteUser", method=RequestMethod.POST)
-	public ModelAndView deleteUser(@ModelAttribute Person person) {
+	public ModelAndView deleteUser(Person person) {
 		ModelAndView viewHelpDesk = new ModelAndView("helpdesks/helpdesk");
 		System.out.println(person.getFullName());
 		personService.deletePerson(person);
