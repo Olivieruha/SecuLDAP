@@ -22,7 +22,6 @@
 
 <body>
 <br/>
-
 	<th>
 		<a href="<c:url value="j_spring_security_logout" />"> Logout</a><br/>
 	</th>
@@ -62,14 +61,14 @@
 					<th><input path="fullName" type="text" name="fullName" class="form-control-fix" placeholder="User fullName"/></th>
 					<th><input path="lastName" type="text" name="lastName" class="form-control-fix" placeholder="User lastName"/></th>
 					<th><button type="submit" role="button" class="btn btn-primary btn-xs"">Ajouter</button></th>
-				</from>
+				</form>
 				</tbody>
 			</table>
 		</c:forEach>
 		
-	<form action="/SecuLDAP/groupmanager/addgroup" method="POST">	
-		<input path="groupName" type="text" name="groupName" class="form-control-fix" placeholder="Group Name"/>
+	<form:form action="/SecuLDAP/groupmanager/addgroup">	
+		<input  path="groupName" type="text" name="groupName" placeholder="Group Name"/>
 		<button type="submit" role="button" class="btn btn-primary btn-xs">Ajouter le groupe</button>
-	</form>	
+	</form:form>	
 </body>
 </html>

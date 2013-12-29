@@ -82,17 +82,15 @@ public class GroupManagerController {
 	}
 	
 	@RequestMapping(value="/groupmanager/addgroup")
-	public ModelAndView addgroup(HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException{	
-		//Création du groupe à rajouter
+	public ModelAndView addgroup(HttpSession session, HttpServletRequest request, HttpServletResponse response, Group group) throws IOException{	
 		Group groupToBeCreated = new Group();
 		groupToBeCreated.setGroupName(request.getParameter("groupName"));
-		//Utilisateur obligatoire lors de la création d'un groupe
-		List<Person> groupMembers = new LinkedList<Person>();		
+		List<Person> groupMembers = new LinkedList<Person>();
 		groupMembers.add(personService.findByPrimaryKey("jonathan.rubiero"));
 		groupToBeCreated.setGroupMembers(groupMembers);
-		//Ajout du groupe
 		groupService.createGroup(groupToBeCreated);
 		return new ModelAndView("redirect:/groupmanager");
+		
 	}
 	
 	@RequestMapping(value="/groupmanager/removegroup")
