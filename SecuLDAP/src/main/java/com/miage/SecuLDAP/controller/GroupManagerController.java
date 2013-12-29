@@ -97,6 +97,20 @@ public class GroupManagerController {
 	}
 	@RequestMapping(value="/groupmanager/adduser")
 	public ModelAndView AddUser(HttpSession session, HttpServletRequest request, HttpServletResponse response, Person person) throws IOException{
+		//Récupération du groupe
+		Person personToBeCreated = person;
+		personToBeCreated.setUserPassword("secret");
+		Group groupToBeUpdated = groupService.findByPrimaryKey(request.getParameter("groupName"));
+		List<Person> groupMembers = new LinkedList<Person>();
+		groupMembers = groupToBeUpdated.getGroupMembers();
+		groupMembers.add(personToBeCreated);
+		groupToBeUpdated.setGroupMembers(groupMembers);
+		for( int i=0; i<groupMembers.size(); i++)
+		{
+			System.out.println(groupMembers.get(i).getFullName()+ " "+groupToBeUpdated.getArrayDnMembers()[i]);
+		}
+		groupService.updateGroup(groupToBeUpdated);
+		/*
 		//Création de la personne à ajouter
 		Person personToAdd = person;
 		//Mdp par défault, à corriger
@@ -115,11 +129,12 @@ public class GroupManagerController {
 			{
 				groupMembers.add(personToAdd);
 			}
+
 			group.setGroupMembers(groupMembers);
 		}
 		//Ajout de la personne au LDAP, fonctionnel
 		personService.createPerson(personToAdd);
-		
+		*/
 		/*
 		//Non fonctionnel !
 		Person personToAdd = person;
