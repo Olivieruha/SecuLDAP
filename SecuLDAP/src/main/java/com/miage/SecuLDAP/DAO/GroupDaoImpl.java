@@ -82,6 +82,7 @@ public class GroupDaoImpl implements GroupDao {
 	public void mapToContext(Group group, DirContextAdapter context) {
 		context.setAttributeValues("objectclass", new String[] {"groupOfNames", "top"});
 	    context.setAttributeValue("cn", group.getGroupName());
+	    context.setAttributeValues("member", null);
 	    
 	    for(Person person : group.getGroupMembers())
 	    	context.addAttributeValue("member", person.toString(), false);

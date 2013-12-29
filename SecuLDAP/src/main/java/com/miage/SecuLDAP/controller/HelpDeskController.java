@@ -29,10 +29,15 @@ public class HelpDeskController {
 	}
 	
 	@RequestMapping(value="/helpdesk/deleteUser", method=RequestMethod.POST)
-	public ModelAndView deleteUser(Person person) {
-		ModelAndView viewHelpDesk = new ModelAndView("helpdesks/helpdesk");
-		System.out.println(person.getFullName());
+	public String deleteUser(Person person) {
 		personService.deletePerson(person);
-		return viewHelpDesk;
+		return "redirect:/helpdesk";
 	}
+	
+	@RequestMapping(value="/helpdesk/updateUser", method=RequestMethod.POST)
+	public String updateUser(Person person) {
+		personService.updatePerson(person);
+		return "redirect:/helpdesk";
+	}
+	
 }
