@@ -132,4 +132,21 @@ public class HelpDeskController {
 		personService.updatePerson(person);
 		return "redirect:/helpdesk/userManagement";
 	}
+	
+	@RequestMapping(value="/helpdesk/removeUserFromGroup", method=RequestMethod.GET)
+	public ModelAndView removeUserFromGroup(HttpServletRequest request) {
+		Group group = groupService.findByPrimaryKey(request.getParameter("groupName"));
+		Person person = personService.findByPrimaryKey(request.getParameter("fullName"));
+		
+		// Si il n'y a qu'un seul membre dans le groupe, on empêche sa suppression
+		if(group.getGroupMembers().size() <= 1) {
+			return new ModelAndView("redirect:/helpdesk/groupManagement");
+		}
+		// Vérification juste au cas ou...
+		if(group.getGroupMembers().contains(person)) {
+			group.getGroupMembers().remove(person);
+			groupService.updateGroup(group);
+		} 
+		return new ModelAndView("redirect:/helpdesk/groupManagement");
+	}
 }

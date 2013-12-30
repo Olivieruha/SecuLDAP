@@ -44,7 +44,7 @@ public class GroupManagerController {
 	@RequestMapping(value="/groupmanager/adduser")
 	public ModelAndView adduser(HttpSession session, HttpServletRequest request, HttpServletResponse response, Person person) throws IOException{
 		Person personToBeCreated = person;
-		personToBeCreated.setUserPassword("secret");
+		personToBeCreated.setUserPassword("sysmd7gd");
 		System.out.println(personToBeCreated.getFullName());
 		
 		try {

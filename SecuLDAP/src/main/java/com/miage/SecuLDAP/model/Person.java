@@ -1,8 +1,5 @@
 package com.miage.SecuLDAP.model;
 
-import java.util.LinkedList;
-import java.util.List;
-
 public class Person
 {
 	private String lastName;
@@ -38,4 +35,19 @@ public class Person
 	public void setFullName(String fullName) {
 		this.fullName = fullName;	
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+        if(this == obj)
+            return true;
+ 
+        if(obj instanceof Person) {
+             Person person = (Person) obj;
+             if(!this.fullName.equals(person.fullName)) {
+            	 return false;
+            }
+            return true;
+        }
+        return false;
+    }	
 }

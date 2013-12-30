@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file="helpdeskheader.jsp" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -14,6 +15,7 @@
 	<c:forEach items="${listGroup}" var="group">
 		<br/>
 		<h4 class="text-muted">&nbspGroupe ${group.groupName}</h4>
+		<a href="/SecuLDAP/helpdesk/addUserToGroup">&nbsp Ajouter un utilisateur</a>
 		<br/>
 		<table class="table table-hover">
 			<tr>
@@ -27,9 +29,9 @@
 					<td>${member.fullName}</td>
 					<td>${member.lastName}</td>
 					<td>
-						<a href="/SecuLDAP/helpdesk/deleteUser?fullName=${member.fullName}">
+						<a href="/SecuLDAP/helpdesk/removeUserFromGroup?groupName=${group.groupName}&fullName=${member.fullName}" >
 							<img src="/SecuLDAP/resources/design/img/remove_user.png"></img>
-						</a>			
+						</a>
 					</td>
 				</tr>
 			</c:if>	
