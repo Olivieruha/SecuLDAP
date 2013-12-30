@@ -34,17 +34,14 @@
 						</a>			
 					</td>
 					<td>
-						<form method="POST" action="/SecuLDAP/helpdesk/deleteUser">
-							<input type="hidden" name="fullName" value="${person.fullName}"/>
-							<button type="submit"><img src="/SecuLDAP/resources/design/img/remove_user.png"></img></button>
-						</form>					
+						<a href="/SecuLDAP/helpdesk/deleteUser?fullName=${person.fullName}">
+							<img src="/SecuLDAP/resources/design/img/remove_user.png"></img>
+						</a>			
 					</td>
 					<td>
-						<form method="POST" action="/SecuLDAP/helpdesk/reinitPassword">
-							<input type="hidden" name="fullName" value="${person.fullName}"/>
-							<input type="hidden" name="lastName" value="${person.lastName}"/>
-							<button type="submit"><img src="/SecuLDAP/resources/design/img/reinit_password.png"></img></button>
-						</form>	
+						<a href="/SecuLDAP/helpdesk/reinitPassword?fullName=${person.fullName}&lastName=${person.lastName}">
+							<img src="/SecuLDAP/resources/design/img/reinit_password.png"></img>
+						</a>
 					</td>
 				</tr>
 			</c:if>	

@@ -1,6 +1,8 @@
 package com.miage.SecuLDAP.controller;
 
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.miage.SecuLDAP.model.Group;
 import com.miage.SecuLDAP.model.Person;
 import com.miage.SecuLDAP.service.GroupService;
 import com.miage.SecuLDAP.service.PersonService;
@@ -40,7 +43,14 @@ public class HelpDeskController {
 	@RequestMapping(value="/helpdesk/groupManagement")
 	public ModelAndView groupManagement(@ModelAttribute Person person) throws IOException{
 		ModelAndView viewGroupManagement = new ModelAndView("helpdesks/groupManagement");
-		viewGroupManagement.addObject("listGroup", groupService.findAllGroup());
+		List<Group> listGroup = groupService.findAllGroup();
+		for(Group group : listGroup) {
+			List<Person> listPerson = new LinkedList<Person>();
+			for(int i = 0 ; i < group.getArrayDnMembers().length ; ++i)
+				listPerson.add(personService.findByDistinguishedName(group.getArrayDnMembers()[i]));
+			group.setGroupMembers(listPerson);
+		}
+		viewGroupManagement.addObject("listGroup", listGroup);
 		return viewGroupManagement;
 	}
 	
@@ -110,13 +120,13 @@ public class HelpDeskController {
 		return new ModelAndView("redirect:/helpdesk/userManagement");
 	}
 	
-	@RequestMapping(value="/helpdesk/deleteUser", method=RequestMethod.POST)
+	@RequestMapping(value="/helpdesk/deleteUser", method=RequestMethod.GET)
 	public String deleteUser(Person person) {
 		personService.deletePerson(person);
 		return "redirect:/helpdesk/userManagement";
 	}
 	
-	@RequestMapping(value="/helpdesk/reinitPassword", method=RequestMethod.POST)
+	@RequestMapping(value="/helpdesk/reinitPassword", method=RequestMethod.GET)
 	public String reinitPassword(Person person) {
 		person.setUserPassword("sysmd7gd");
 		personService.updatePerson(person);

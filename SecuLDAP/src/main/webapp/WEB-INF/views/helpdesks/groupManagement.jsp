@@ -10,13 +10,32 @@
 	<link rel="stylesheet" type="text/css" href="/SecuLDAP/resources/design/css/signin.css"/>
 	<link rel="stylesheet" type="text/css" href="/SecuLDAP/resources/design/css/bootstrap.min.css"/>
 </head>
-<body>
-	<h4> Listes des groupes :</h4>
-	<ul>
+<body>	
 	<c:forEach items="${listGroup}" var="group">
-		<li><a href="#">${group.groupName}</a></li>
+		<br/>
+		<h4 class="text-muted">&nbspGroupe ${group.groupName}</h4>
+		<br/>
+		<table class="table table-hover">
+			<tr>
+				<th>Utilisateur</th>
+				<th>Nom de famille</th>
+				<th>Supprimer du groupe</th>
+			</tr>
+			<c:forEach items="${group.groupMembers}" var="member">
+				<c:if test="${member.fullName!='system administrator'}">			
+				<tr>
+					<td>${member.fullName}</td>
+					<td>${member.lastName}</td>
+					<td>
+						<a href="/SecuLDAP/helpdesk/deleteUser?fullName=${member.fullName}">
+							<img src="/SecuLDAP/resources/design/img/remove_user.png"></img>
+						</a>			
+					</td>
+				</tr>
+			</c:if>	
+			</c:forEach>
+		</table>
 	</c:forEach>
-	</ul>
 	
 	<script src="/SecuLDAP/resources/design/js/bootstrap.min.js"></script> 
 </body>
