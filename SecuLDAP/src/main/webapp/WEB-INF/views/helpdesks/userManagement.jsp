@@ -13,8 +13,8 @@
 </head>
 <body>
 	<br/>
-	<h4 class="text-muted">&nbspListe des utilisateurs :</h4>
-	<a href="/SecuLDAP/helpdesk/addUser">&nbsp Ajouter un utilisateur</a>
+	<h4 class="text-muted">&nbsp;Liste des utilisateurs :</h4>
+	<a href="/SecuLDAP/helpdesk/addUser">&nbsp;Ajouter un utilisateur</a>
 	<table class="table table-hover">
 		<tr>
 			<th>Utilisateur</th>
