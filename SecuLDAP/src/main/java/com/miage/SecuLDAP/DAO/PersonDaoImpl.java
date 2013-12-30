@@ -39,7 +39,7 @@ public class PersonDaoImpl implements PersonDao {
    }
 
    public void delete(Person person) {
-      ldapTemplate.unbind(buildDn(person));
+      ldapTemplate.unbind(buildDn(person), true);
    }
 
    public Person findByPrimaryKey(String name) {

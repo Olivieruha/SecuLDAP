@@ -12,8 +12,8 @@
     </div>
     <div class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-        <li><a class="lien-contenu" href="#usermanagement">Gestion des utilisateurs</a></li>
-        <li><a class="lien-contenu" href="#groupmanagement">Gestion des groupes</a></li> <!--  #Id donné dans la classe JSP -->
+        <li><a class="lien-contenu" href="/SecuLDAP/helpdesk/userManagement">Gestion des utilisateurs</a></li>
+        <li><a class="lien-contenu" href="/SecuLDAP/helpdesk/groupManagement">Gestion des groupes</a></li> <!--  #Id donné dans la classe JSP -->
         <!--<li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
           <ul class="dropdown-menu">

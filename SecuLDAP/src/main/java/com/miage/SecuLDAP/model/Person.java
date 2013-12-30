@@ -1,5 +1,8 @@
 package com.miage.SecuLDAP.model;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class Person
 {
 	private String lastName;

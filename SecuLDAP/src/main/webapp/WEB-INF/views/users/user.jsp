@@ -20,7 +20,7 @@
 			<form:hidden path="fullName"/>
 			<form:hidden path="lastName"/>
 			<form:password class="form-control" path="userPassword" placeholder=" Nouveau mot de passe"/>
-			<h6 class="alert alert-danger text-center">${passwordUpdateMessage}</h6>	
+			<c:if test="${not empty passwordUpdateMessage}"><h6 class="alert alert-danger text-center">${passwordUpdateMessage}</h6></c:if>		
 			<form:button class="btn btn-success btn-sm center-block" type="submit">Changer le mot de passe</form:button>
 		</form:form>
 	</div>			
