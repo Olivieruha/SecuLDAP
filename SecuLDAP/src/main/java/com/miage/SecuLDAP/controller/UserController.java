@@ -51,7 +51,8 @@ public class UserController {
 		}
 		else {
 			//TODO customiser le message d'erreur
-			passwordUpdateMessage = "Mot de passe invalide...";
+			passwordUpdateMessage = "Le mot de passe doit être composé d'au moins 8 caractères et contenir "
+					+ "une majuscule, un chiffre et un caractère spécial parmi @#$%!?";
 		}
 		
 		viewUser.addObject("passwordUpdateMessage", passwordUpdateMessage);	

@@ -17,9 +17,8 @@
 		<form:input class="form-control" path="lastName" placeholder="Nom de famille" value="${person.lastName}"/>
 		<form:password class="form-control" path="userPassword" placeholder="Mot de passe"/>
 		<c:if test="${not empty editUserMessage}"><h6 class="alert alert-danger text-center">${editUserMessage}</h6></c:if>		
-		<c:if test="${not empty validPasswordMessage}"><h6 class="alert alert-danger text-center">${validPasswordMessage}</h6></c:if>	
+		<c:if test="${not empty validPasswordMessage}"><h6 class="alert alert-danger text-center">${validPasswordMessage}</h6></c:if>
 		<form:button class="btn btn-success btn-sm center-block" type="submit">Modifier</form:button>
-		<form:button type="reset">Annuler</form:button>
 	</form:form>
 	<script src="/SecuLDAP/resources/design/js/bootstrap.min.js"></script>  
 </body>

@@ -24,13 +24,21 @@
 			<form:button class="btn btn-success btn-sm center-block" type="submit">Changer le mot de passe</form:button>
 		</form:form>
 	</div>			
-
-	<div class="contenu cache jumbotron" id="apropos">
-		<p>L'à propos</p>
-	</div>
 	
 	<div class="contenu cache jumbotron" id="contact">
-		<p>Les contacts</p>
+		<address>
+		  <strong>Fictive SA</strong><br>
+		  795 Avenue de l'inconnu, Suite 600<br>
+		  Laville, CP 00000<br>
+		  <abbr title="Phone">Tel:</abbr> 07 08 09 10 11
+		</address>
+		
+		<address>
+		  <strong>Jonathan Rubiero</strong><br>
+		  <a href="mailto:rubiero.jonathan@gmail.com">rubiero.jonathan@gmail.com</a><br>
+		  <strong>Olivier Durrwell</strong><br>
+		  <a href="mailto:olivier.durrwell@uha.fr">olivier.durrwell@uha.fr</a>
+		</address>
 	</div>
 	
     <script src="/SecuLDAP/resources/design/js/bootstrap.min.js"></script>  

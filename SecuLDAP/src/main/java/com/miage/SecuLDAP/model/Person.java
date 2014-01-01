@@ -1,5 +1,6 @@
 package com.miage.SecuLDAP.model;
 
+
 public class Person
 {
 	private String lastName;
