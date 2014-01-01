@@ -47,6 +47,11 @@ public class GroupServiceImpl implements GroupService {
 	@SuppressWarnings("unchecked")
 	@Override
 	public LinkedList<Group> findAllGroup() {
-		return (LinkedList<Group>) groupDao.findAll();
+		List<Group> listGroupNoMembers = (List<Group>) groupDao.findAll();
+		List<Group> listGroup = new LinkedList<Group>();
+		for(Group group : listGroupNoMembers) {
+			listGroup.add(findByPrimaryKey(group.getGroupName()));
+		}
+		return (LinkedList<Group>) listGroup;//(LinkedList<Group>) groupDao.findAll();
 	}
 }

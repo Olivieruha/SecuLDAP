@@ -41,6 +41,7 @@ public class GroupManagerController {
 		}
 		return new ModelAndView("groupmanagers/groupmanager").addObject("groups",listGroups);
 	}
+	
 	@RequestMapping(value="/groupmanager/adduser")
 	public ModelAndView adduser(HttpSession session, HttpServletRequest request, HttpServletResponse response, Person person) throws IOException{
 		Person personToBeCreated = person;
