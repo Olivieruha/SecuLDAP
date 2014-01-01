@@ -32,19 +32,31 @@
 				<button type="submit" role="button" class="customer btn btn-danger btn-xs">Supprimer</button>
 			</form>		
 			</th>
-			<table class="table table-bordered well">	
+			<table class="table table-hover">	
 				<thead>
 					<tr>
-						<th>User Name</th>
-						<th>First name</th>
+						<th>Utilisateur</th>
+						<th>Nom de famille</th>
+						<th>Modifier</th>
+						<th>Supprimer</th>
 					</tr>
 				</thead>
 				<tbody>							
 						<c:forEach items="${g.groupMembers}" var="person">
 						<tr>
-							<th>${person.fullName}</th>
-							<th>${person.lastName}</th>
-							<th>
+							<td>${person.fullName}</td>
+							<td>${person.lastName}</td>
+							<td>
+								<a href="/SecuLDAP/groupmanager/edituser?fullName=${g.groupName}&fullName=${person.fullName}" >
+									<img src="/SecuLDAP/resources/design/img/edit_user.png"></img>
+								</a>			
+							</td>
+							<td>
+								<a href="/SecuLDAP/groupmanager/removeuser?fullName=${g.groupName}&fullName=${person.fullName}" >
+									<img src="/SecuLDAP/resources/design/img/remove_user.png"></img>
+								</a>			
+							</td>
+							<!--  <th>
 								<form action="/SecuLDAP/groupmanager/removeuser" method="POST">	
 									<input type="hidden" name="fullName" value="${person.fullName}" />	
 									<input type="hidden" name="groupName" value="${g.groupName}" />	
@@ -53,7 +65,7 @@
 			    				<form action="/SecuLDAP/groupmanager/modifyuser" method="POST">		
 				    				<button type="submit" role="button" class="btn btn-primary btn-xs">Modifier</button>
 			    				</form>	
-			    			</th>
+			    			</th>-->
 			    		</tr>
 						</c:forEach>	
 				<form modelAttribute="person" action="/SecuLDAP/groupmanager/adduser" method="POST">

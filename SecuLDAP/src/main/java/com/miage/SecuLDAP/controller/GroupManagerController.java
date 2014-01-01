@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ldap.NameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.miage.SecuLDAP.model.Group;
@@ -67,8 +68,8 @@ public class GroupManagerController {
 		return new ModelAndView("redirect:/groupmanager");
 	}
 	
-	@RequestMapping(value="/groupmanager/removeuser")
-	public ModelAndView removeuser(HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException{			
+	@RequestMapping(value="/groupmanager/removeuser", method=RequestMethod.GET)
+	public ModelAndView removeuser(HttpServletRequest request) {			
 		Group groupToBeUpdated = groupService.findByPrimaryKey(request.getParameter("groupName"));
 		List<Person> groupMembers = new LinkedList<Person>();
 		for(int i = 0 ; i < groupToBeUpdated.getArrayDnMembers().length ; ++i)
