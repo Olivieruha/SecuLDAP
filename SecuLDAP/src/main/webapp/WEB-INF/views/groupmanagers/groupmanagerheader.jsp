@@ -12,8 +12,8 @@
     </div>
     <div class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-        <li><a class="lien-contenu" href="#usermanagement">Gestion des utilisateurs</a></li>
-        <li><a class="lien-contenu" href="#groupmanagement">Gestion des groupes</a></li> <!--  #Id donné dans la classe JSP -->
+        <li><a class="lien-contenu" href="/SecuLDAP/groupmanager/">Gestion des groupes</a></li>
+        <li><a class="lien-contenu" href="/SecuLDAP/groupmanager/addGroup">Création d'un groupe</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li><a href="<c:url value="/j_spring_security_logout" />">Se déconnecter</a></li>

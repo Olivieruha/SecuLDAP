@@ -1,6 +1,7 @@
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ include file="groupmanagerheader.jsp" %>
 
@@ -23,9 +24,11 @@
 <body>
 <br/>
 	<th>
-		<a href="<c:url value="j_spring_security_logout" />"> Logout</a><br/>
+		<a href="<c:url value="j_spring_security_logout" />"> Logout</a>
 	</th>
+	<br/>
 	<a href="/SecuLDAP/groupmanager/addGroup">&nbsp;Ajouter un groupe</a>
+	<br/>
 		<c:forEach items="${groups}" var="g">
 			<th><b>${g.groupName}</b>
 			<form action="/SecuLDAP/groupmanager/removegroup" method="POST">	
@@ -48,12 +51,13 @@
 							<td>${person.fullName}</td>
 							<td>${person.lastName}</td>
 							<td>
-								<a href="/SecuLDAP/groupmanager/edituser?fullName=${g.groupName}&fullName=${person.fullName}" >
+								<a href="/SecuLDAP/groupmanager/edituser?groupName=${g.groupName}&fullName=${person.fullName}" >
 									<img src="/SecuLDAP/resources/design/img/edit_user.png"></img>
 								</a>			
 							</td>
 							<td>
-								<a href="/SecuLDAP/groupmanager/removeuser?fullName=${g.groupName}&fullName=${person.fullName}" >
+								<a href="/SecuLDAP/groupmanager/removeuser?groupName=${g.groupName}&fullName=${person.fullName}" 
+								onclick="<c:if test="${fn:length(g.groupMembers) <= 1}">alert('Impossible de supprimer le dernier membre d\'un groupe !')</c:if>">
 									<img src="/SecuLDAP/resources/design/img/remove_user.png"></img>
 								</a>			
 							</td>
