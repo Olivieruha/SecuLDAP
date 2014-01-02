@@ -13,8 +13,8 @@
     <div class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li><a class="lien-contenu" href="/SecuLDAP/admin/">Gestion des groupes</a></li>
-        <li><a class="lien-contenu" href="/SecuLDAP/groupmanager/addGroup">Création d'un groupe</a></li>
-        <li><a class="lien-contenu" href="/SecuLDAP/groupmanager/addGroup">Création d'un utilisateur</a></li>     
+        <li><a class="lien-contenu" href="/SecuLDAP/admin/addGroup">Création d'un groupe</a></li>
+        <li><a class="lien-contenu" href="/SecuLDAP/admin/addUser">Création d'un utilisateur</a></li>     
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li><a href="<c:url value="/j_spring_security_logout" />">Se déconnecter</a></li>

@@ -31,17 +31,7 @@ public class GroupManagerController {
 	
 	@RequestMapping(value="/groupmanager")
 	public ModelAndView groupManager(HttpServletResponse response){
-		List<Group> listGroups = groupService.findAllGroup();
-
-		// Création de la liste des membres (ce sont des objets de type Person) grâce au tableau des Dn (arrayDnMembers) contenu dans le groupe
-		for(Group group : listGroups)
-		{
-			List<Person> groupMembers = new LinkedList<Person>();
-			for(int i = 0 ; i < group.getArrayDnMembers().length ; ++i)
-				groupMembers.add(personService.findByDistinguishedName((group.getArrayDnMembers()[i])));
-			group.setGroupMembers(groupMembers);
-		}
-		return new ModelAndView("groupmanagers/groupmanager").addObject("groups",listGroups);
+		return new ModelAndView("groupmanagers/groupmanager").addObject("groups", groupService.findAllGroup());
 	}
 	
 	@RequestMapping(value="/groupmanager/adduser")
@@ -96,7 +86,6 @@ public class GroupManagerController {
 	
 	@RequestMapping(value="/groupmanager/addGroup", method=RequestMethod.GET)
 	public ModelAndView addGroup(HttpServletRequest request) {
-		System.out.println("ok");
 		return new ModelAndView("groupmanagers/addGroup");
 	}
 	
