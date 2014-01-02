@@ -1,13 +1,16 @@
 package com.miage.SecuLDAP.controller;
 
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.miage.SecuLDAP.model.Group;
@@ -24,14 +27,46 @@ public class AdminController {
 	GroupService groupService;
 
 	@RequestMapping(value="/admin")
-	public ModelAndView test(HttpServletResponse response) throws IOException{
-		
-		List<Person> listPerson = personService.findAllPerson();
-		for(Person p : listPerson) System.out.println(p.getFullName());
-		
-		List<Group> listGroup = groupService.findAllGroup();
-		for(Group g : listGroup) System.out.println(g.getGroupName());
-		
-		return new ModelAndView("admin");
+	public ModelAndView admin(HttpServletResponse response) {
+		List<Group> listGroups = groupService.findAllGroup();
+
+		// Création de la liste des membres (ce sont des objets de type Person) grâce au tableau des Dn (arrayDnMembers) contenu dans le groupe
+		for(Group group : listGroups)
+		{
+			List<Person> groupMembers = new LinkedList<Person>();
+			for(int i = 0 ; i < group.getArrayDnMembers().length ; ++i)
+				groupMembers.add(personService.findByDistinguishedName((group.getArrayDnMembers()[i])));
+			group.setGroupMembers(groupMembers);
+		}
+		return new ModelAndView("admins/admin").addObject("groups",listGroups);
+	}
+	
+	@RequestMapping(value="/admin/removeUserFromGroup")
+	public ModelAndView removeUserFromGroup(HttpServletResponse response) 
+	{
+		return new ModelAndView("redirect:/admin");
+	}
+	
+	@RequestMapping(value="/admin/deleterUser")
+	public ModelAndView deleteUser(HttpServletResponse response) 
+	{
+		return new ModelAndView("redirect:/admin");
+	}
+	
+	@RequestMapping(value="/admin/addGroup", method=RequestMethod.GET)
+	public ModelAndView addGroup(HttpServletRequest request) {
+		System.out.println("ok");
+		return new ModelAndView("admin/addGroup");
+	}
+	
+	@RequestMapping(value="/admin/addGroupProcess")
+	public ModelAndView addGroupProcess(HttpServletRequest request) {	
+		Group groupToBeCreated = new Group();
+		groupToBeCreated.setGroupName(request.getParameter("groupName"));
+		List<Person> groupMembers = new LinkedList<Person>();
+		groupMembers.add(personService.findByPrimaryKey("jonathan.rubiero"));
+		groupToBeCreated.setGroupMembers(groupMembers);
+		groupService.createGroup(groupToBeCreated);
+		return new ModelAndView("redirect:/admin");
 	}
 }
