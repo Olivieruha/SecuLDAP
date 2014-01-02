@@ -25,20 +25,21 @@
 	<th>
 		<a href="<c:url value="j_spring_security_logout" />"> Logout</a><br/>
 	</th>
+	<a href="/SecuLDAP/groupmanager/addGroup">&nbsp;Ajouter un groupe</a>
 		<c:forEach items="${groups}" var="g">
 			<th><b>${g.groupName}</b>
 			<form action="/SecuLDAP/groupmanager/removegroup" method="POST">	
 				<input type="hidden" name="groupName" value="${g.groupName}" />	
-				<button type="submit" role="button" class="customer btn btn-danger btn-xs">Supprimer</button>
+				<button type="submit" role="button" class="customer btn btn-danger btn-xs">Supprimer le groupe</button>
 			</form>		
 			</th>
-			<table class="table table-hover">	
+			<table class="table table-hover table-condensed">	
 				<thead>
 					<tr>
 						<th>Utilisateur</th>
 						<th>Nom de famille</th>
 						<th>Modifier</th>
-						<th>Supprimer</th>
+						<th>Supprimer du groupe</th>
 					</tr>
 				</thead>
 				<tbody>							
@@ -56,23 +57,14 @@
 									<img src="/SecuLDAP/resources/design/img/remove_user.png"></img>
 								</a>			
 							</td>
-							<!--  <th>
-								<form action="/SecuLDAP/groupmanager/removeuser" method="POST">	
-									<input type="hidden" name="fullName" value="${person.fullName}" />	
-									<input type="hidden" name="groupName" value="${g.groupName}" />	
-				    				<button type="submit" role="button" class="customer btn btn-danger btn-xs">Supprimer</button>
-			    				</form>		
-			    				<form action="/SecuLDAP/groupmanager/modifyuser" method="POST">		
-				    				<button type="submit" role="button" class="btn btn-primary btn-xs">Modifier</button>
-			    				</form>	
-			    			</th>-->
 			    		</tr>
 						</c:forEach>	
 				<form modelAttribute="person" action="/SecuLDAP/groupmanager/adduser" method="POST">
 					<input type="hidden" name="groupName" value="${g.groupName}" />	
 					<th><input path="fullName" type="text" name="fullName" class="form-control-fix" placeholder="User fullName"/></th>
 					<th><input path="lastName" type="text" name="lastName" class="form-control-fix" placeholder="User lastName"/></th>
-					<th><button type="submit" role="button" class="btn btn-primary btn-xs"">Ajouter</button></th>
+					<th><button type="submit" role="button" class="btn btn-primary btn-xs"">Ajouter au groupe</button></th>
+					<th></th>
 				</form>
 				</tbody>
 			</table>
