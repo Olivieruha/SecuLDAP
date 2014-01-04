@@ -30,4 +30,19 @@ public class Group {
 	public void setArrayDnMembers(String[] arrayDnMembers) {
 		this.arrayDnMembers = arrayDnMembers;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+        if(this == obj)
+            return true;
+ 
+        if(obj instanceof Group) {
+             Group group = (Group) obj;
+             if(!this.groupName.equals(group.groupName)) {
+            	 return false;
+            }
+            return true;
+        }
+        return false;
+    }	
 }

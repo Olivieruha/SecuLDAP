@@ -46,7 +46,15 @@ public class HelpDeskController {
 	 */
 	@RequestMapping(value="/helpdesk/groupManagement")
 	public ModelAndView groupManagement() {
-		return new ModelAndView("helpdesks/groupManagement").addObject("listGroup",groupService.findAllGroup());
+		// Affiche uniquement les groupes visibles pour le helpdesk
+		List<Group> listGroup = groupService.findAllGroup();
+		List<Group> listGroupCheck = new LinkedList<Group>(listGroup);
+		for(Group group : listGroupCheck) {
+			if(group.getGroupName().equals("admin") || group.getGroupName().equals("helpdesk") || group.getGroupName().equals("groupmanager")) {
+				listGroup.remove(group);
+			}
+		}
+		return new ModelAndView("helpdesks/groupManagement").addObject("listGroup", listGroup);
 	}
 	
 	/**
