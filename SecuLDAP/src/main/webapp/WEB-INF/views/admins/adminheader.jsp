@@ -12,7 +12,8 @@
     </div>
     <div class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-        <li><a class="lien-contenu" href="/SecuLDAP/admin/">Gestion des groupes</a></li>
+        <li><a class="lien-contenu" href="/SecuLDAP/admin/groupManagement">Gestion des groupes</a></li>
+        <li><a class="lien-contenu" href="/SecuLDAP/admin/">Gestion des utilisateurs</a></li>
         <li><a class="lien-contenu" href="/SecuLDAP/admin/addGroup">Création d'un groupe</a></li>
         <li><a class="lien-contenu" href="/SecuLDAP/admin/addUser">Création d'un utilisateur</a></li>     
       </ul>

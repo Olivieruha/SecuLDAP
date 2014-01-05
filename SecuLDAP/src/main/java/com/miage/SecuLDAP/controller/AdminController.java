@@ -36,7 +36,13 @@ public class AdminController {
 
 	@RequestMapping(value="/admin")
 	public ModelAndView admin() {
-		return new ModelAndView("admins/admin").addObject("groups", groupService.findAllGroup());
+		return new ModelAndView("admins/userManagement").addObject("listPerson", personService.findAllPerson());
+	}
+	
+	
+	@RequestMapping(value="/admin/groupManagement")
+	public ModelAndView groupManagement() {
+		return new ModelAndView("admins/groupManagement").addObject("groups", groupService.findAllGroup());
 	}
 	
 	/**
