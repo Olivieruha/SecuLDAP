@@ -13,7 +13,7 @@
 <body>	
 	<br/>
 	
-	<form:form class="form-signin" action="/SecuLDAP/admin/addGroupProcess">
+	<form:form class="form-signin" action="/SecuLDAP/admin/addUserToGroup">
 		<h3 class="text-info text-center"><br/>Formulaire d'un groupe<br/></h3>
 		<input class="form-control" path="groupName" type="text" name="groupName" placeholder="Nom du groupe"/>
 		<button class="btn btn-success btn-sm center-block" type="submit">Ajouter</button>

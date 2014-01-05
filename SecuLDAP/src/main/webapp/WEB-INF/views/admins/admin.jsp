@@ -20,7 +20,7 @@
 		<br/>
 		<a href="<c:url value="j_spring_security_logout" />"> Logout</a>
 		<br/>
-		<a href="/SecuLDAP/admin/addGroup">&nbsp;Ajouter un groupe</a>
+		<a href="/SecuLDAP/admin/addGroup">Ajouter un groupe</a>
 		<br/>
 			<c:forEach items="${groups}" var="group">
 				<hr/>
@@ -44,7 +44,7 @@
 								<td>${person.fullName}</td>
 								<td>${person.lastName}</td>
 								<td>
-									<a href="/SecuLDAP/admin/edituser?groupName=${group.groupName}&fullName=${person.fullName}" >
+									<a href="/SecuLDAP/admin/editUser?groupName=${group.groupName}&fullName=${person.fullName}" >
 										<img src="/SecuLDAP/resources/design/img/edit_user.png"></img>
 									</a>			
 								</td>
@@ -70,10 +70,6 @@
 					</form>
 					</tbody>
 				</table>
-			</c:forEach>
-		<form:form action="/SecuLDAP/admin/addGroup">	
-			<input  path="groupName" type="text" name="groupName" placeholder="Group Name"/>
-			<button type="submit" role="button" class="btn btn-primary btn-xs">Ajouter le groupe</button>
-		</form:form>	
+			</c:forEach>	
 	</body>
 </html>

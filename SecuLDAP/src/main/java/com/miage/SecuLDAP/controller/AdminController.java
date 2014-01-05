@@ -82,26 +82,7 @@ public class AdminController {
 		personService.createPerson(person);
 		return new ModelAndView("redirect:/admin");
 	}
-	
 
-	
-	@RequestMapping(value="/admin/addGroup", method=RequestMethod.GET)
-	public ModelAndView addGroup(HttpServletRequest request) {
-		return new ModelAndView("admins/addGroup");
-	}
-	
-	@RequestMapping(value="/admin/addGroupProcess")
-	public ModelAndView addGroupProcess(HttpServletRequest request) {	
-		Group groupToBeCreated = new Group();
-		groupToBeCreated.setGroupName(request.getParameter("groupName"));
-		List<Person> groupMembers = new LinkedList<Person>();
-		groupMembers.add(personService.findByPrimaryKey("jonathan.rubiero"));
-		groupToBeCreated.setGroupMembers(groupMembers);
-		groupService.createGroup(groupToBeCreated);
-		return new ModelAndView("redirect:/admin");
-	}
-	
-	
 	/**
 	 * Permet de contruire la page de modification d'un utilisateur
 	 * @param person L'utilisateur à modifier
@@ -109,7 +90,7 @@ public class AdminController {
 	 */
 	@RequestMapping(value="/admin/editUser", method=RequestMethod.GET)
 	public ModelAndView editUser(Person person) {
-		return new ModelAndView("admin/editUser").addObject("person", person);
+		return new ModelAndView("admins/editUser").addObject("person", person);
 	}
 		
 	/**
@@ -140,12 +121,11 @@ public class AdminController {
 			isValid = false;
 		}
 		if(!isValid)
-			return new ModelAndView("admin/editUser").addObject("createUserMessage", editUserMessage).addObject("validPasswordMessage", validPasswordMessage);
+			return new ModelAndView("admins/editUser").addObject("createUserMessage", editUserMessage).addObject("validPasswordMessage", validPasswordMessage);
 		// Mise à jour de l'utilisateur et redirection
 		personService.updatePerson(person);
 		return new ModelAndView("redirect:/admin");
 	}
-	
 	
 	/**
 	 * Permet de réinitialiser le mot de passe d'un utilisateur 
@@ -160,27 +140,46 @@ public class AdminController {
 		return "redirect:/admin";
 	}
 	
+	@RequestMapping(value="/admin/addGroup", method=RequestMethod.GET)
+	public ModelAndView addGroup(HttpServletRequest request) {
+		return new ModelAndView("/admins/addGroup");
+	}
+	
 	/**
-	 * Permet de créer la page d'ajout d'un utilisateur à un groupe
+	 * Permet de créer la page d'ajout d'un utilisateur à un groupe et la création du-dit groupe s'il n'existe pas
 	 * @param request La requête pour obtenir le nom du groupe
 	 * @return La vue vers l'ajout d'un utlisateur à un groupe
 	 */
-	@RequestMapping(value="/admin/addUserToGroup", method=RequestMethod.GET)
+	@RequestMapping(value="/admin/addUserToGroup", method=RequestMethod.POST)
 	public ModelAndView addUserToGroup(HttpServletRequest request) {
 		ModelAndView viewAddUSerToGroup = new ModelAndView("admins/addUserToGroup");
 		// Récupération de la liste des personnes disponibles pour l'ajout au groupe
 		List<Person> listPerson = personService.findAllPerson();
 		//Récupération du groupe
-		Group group = groupService.findByPrimaryKey(request.getParameter("groupName"));
-		// Vérification : si des personnes appartiennent déjà au groupe, elle ne feront pas partie de la liste des personnes disponibles
-		List<Person> listPersonCheck = new LinkedList<Person>(listPerson); // Création d'un seconde liste pour la vérification 
-		for(Person person : listPersonCheck) {
-			if(group.getGroupMembers().contains(person))
-				listPerson.remove(person);
+		boolean groupExist=false;
+		for(Group group : groupService.findAllGroup())
+			if(group.getGroupName().equals(request.getParameter("groupName")))
+			{
+				groupExist=true; break;
+			}
+		if(!groupExist)
+		{
+			Group group = new Group();
+			group.setGroupName(request.getParameter("groupName"));
+		}
+		else
+		{
+			Group group = groupService.findByPrimaryKey(request.getParameter("groupName"));
+			// Vérification : si des personnes appartiennent déjà au groupe, elle ne feront pas partie de la liste des personnes disponibles
+			List<Person> listPersonCheck = new LinkedList<Person>(listPerson); // Création d'un seconde liste pour la vérification 
+			for(Person person : listPersonCheck) {
+				if(group.getGroupMembers().contains(person))
+					listPerson.remove(person);
+			}
 		}
 		// Ajout des objets à la vue
 		viewAddUSerToGroup.addObject("listPerson", listPerson);
-		viewAddUSerToGroup.addObject("groupName", group.getGroupName());		
+		viewAddUSerToGroup.addObject("groupName", request.getParameter("groupName"));		
 		return viewAddUSerToGroup;
 	}
 	
@@ -191,13 +190,31 @@ public class AdminController {
 	 */
 	@RequestMapping(value="/admin/addUserToGroupProcess", method=RequestMethod.GET)
 	public ModelAndView addUserToGroupProcess(HttpServletRequest request) {
-		// Récupération du groupe et de la personne à ajouter
-		Person personToAdd = personService.findByPrimaryKey(request.getParameter("fullName"));
-		Group groupToUpdate = groupService.findByPrimaryKey(request.getParameter("groupName"));		
-		// Ajout de la personne au groupe et mise à jour du groupe
-		groupToUpdate.getGroupMembers().add(personToAdd);
-		groupService.updateGroup(groupToUpdate);
-		return new ModelAndView("redirect:/admin");
+		boolean groupExist=false;
+		for(Group group : groupService.findAllGroup())
+			if(group.getGroupName().equals(request.getParameter("groupName")))
+			{
+				groupExist=true; break;
+			}
+		if(groupExist)
+		{
+			// Récupération du groupe et de la personne à ajouter
+			Person personToAdd = personService.findByPrimaryKey(request.getParameter("fullName"));
+			Group groupToUpdate = groupService.findByPrimaryKey(request.getParameter("groupName"));		
+			// Ajout de la personne au groupe et mise à jour du groupe
+			groupToUpdate.getGroupMembers().add(personToAdd);
+			groupService.updateGroup(groupToUpdate);
+		}
+		else
+		{
+			Group groupToBeCreated = new Group();
+			groupToBeCreated.setGroupName(request.getParameter("groupName"));
+			List<Person> groupMembers = new LinkedList<Person>();
+			groupMembers.add(personService.findByPrimaryKey(request.getParameter("fullName")));
+			groupToBeCreated.setGroupMembers(groupMembers);
+			groupService.createGroup(groupToBeCreated);
+		}
+			return new ModelAndView("redirect:/admin");
 	}
 	
 	/**
