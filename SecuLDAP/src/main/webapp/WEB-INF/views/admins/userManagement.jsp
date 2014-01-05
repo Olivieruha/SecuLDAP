@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-	<title>Helpdesk</title>
+	<title>Administrateur</title>
 	<link rel="stylesheet" type="text/css" href="/SecuLDAP/resources/design/css/signin.css"/>
 	<link rel="stylesheet" type="text/css" href="/SecuLDAP/resources/design/css/bootstrap.min.css"/>
 </head>

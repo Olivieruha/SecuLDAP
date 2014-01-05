@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,13 +33,11 @@ public class AdminController {
 	private static final String PASSWORD_PATTERN = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%!?]).{8,20})";
 	private Pattern pattern = Pattern.compile(PASSWORD_PATTERN);
 	private Matcher matcher;
-	
 
 	@RequestMapping(value="/admin")
 	public ModelAndView admin() {
 		return new ModelAndView("admins/userManagement").addObject("listPerson", personService.findAllPerson());
 	}
-	
 	
 	@RequestMapping(value="/admin/groupManagement")
 	public ModelAndView groupManagement() {
@@ -151,6 +150,12 @@ public class AdminController {
 		return new ModelAndView("/admins/addGroup");
 	}
 	
+	@RequestMapping(value="/admin/deleteGroup")
+	public ModelAndView deleteGroup(HttpSession session, HttpServletRequest request, HttpServletResponse response) {	
+		groupService.deleteGroup(groupService.findByPrimaryKey(request.getParameter("groupName")));
+		return new ModelAndView("redirect:/admin");
+	}
+	
 	/**
 	 * Permet de créer la page d'ajout d'un utilisateur à un groupe et la création du-dit groupe s'il n'existe pas
 	 * @param request La requête pour obtenir le nom du groupe
@@ -244,11 +249,27 @@ public class AdminController {
 		return new ModelAndView("redirect:/admin");
 	}
 	
-	@RequestMapping(value="/admin/deleterUser")
-	public ModelAndView deleteUser(HttpServletResponse response) 
-	{
+	@RequestMapping(value="/admin/deleteUser", method=RequestMethod.GET)
+	public ModelAndView deleteUser(Person person) {
+		System.out.println(person.getFullName());
+		List<Group> listGroup = groupService.findAllGroup();
+		for(Group group : listGroup) {
+			// Si c'est le dernier membre d'un groupe, on empêche la suppression, on affiche un message d'erreur et on quitte
+			if(group.getGroupMembers().contains(person) && group.getGroupMembers().size() <= 1) {
+				System.out.println("est dernir");
+				String onlyGroupMemberMessage = person.getFullName() +" est le seul membre du groupe " + group.getGroupName();
+				return new ModelAndView("redirect:/admin").addObject("onlyGroupMemberMessage", onlyGroupMemberMessage);
+			}			
+		}
+		// Si on est arrivé ici, c'est que la personne à supprimer n'est l'unique membre d'aucun groupe
+		for(Group group : listGroup) {
+			if(group.getGroupMembers().contains(person)) {
+				group.getGroupMembers().remove(person); // On retire la personne des groupes où elle est présente
+				groupService.updateGroup(group);
+			}
+		}
+		// Suppression de la personne
+		personService.deletePerson(person);
 		return new ModelAndView("redirect:/admin");
 	}
-	
-	
 }
