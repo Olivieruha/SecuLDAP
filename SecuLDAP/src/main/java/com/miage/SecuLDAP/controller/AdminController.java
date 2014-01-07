@@ -169,7 +169,7 @@ public class AdminController {
 	@RequestMapping(value="/admin/deleteGroup")
 	public ModelAndView deleteGroup(HttpSession session, HttpServletRequest request, HttpServletResponse response) {	
 		groupService.deleteGroup(groupService.findByPrimaryKey(request.getParameter("groupName")));
-		return new ModelAndView("redirect:/admin");
+		return new ModelAndView("redirect:/admin/groupManagement");
 	}
 	
 	/**
@@ -237,7 +237,7 @@ public class AdminController {
 			groupToBeCreated.setGroupMembers(groupMembers);
 			groupService.createGroup(groupToBeCreated);
 		}
-			return new ModelAndView("redirect:/admin");
+			return new ModelAndView("redirect:/admin/groupManagement");
 	}
 	
 	/**
@@ -259,7 +259,7 @@ public class AdminController {
 		group.getGroupMembers().remove(person);
 		groupService.updateGroup(group);
 		// Redirection vers la gestion des groupes
-		return new ModelAndView("redirect:/admin");
+		return new ModelAndView("redirect:/admin/groupManagement");
 	}
 	
 	@RequestMapping(value="/admin/deleteUser", method=RequestMethod.GET)
