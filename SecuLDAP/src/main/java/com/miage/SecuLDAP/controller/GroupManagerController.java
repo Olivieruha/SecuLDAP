@@ -29,7 +29,14 @@ public class GroupManagerController {
 	
 	@RequestMapping(value="/groupmanager")
 	public ModelAndView groupManager(HttpServletResponse response){
-		return new ModelAndView("groupmanagers/groupmanager").addObject("groups", groupService.findAllGroup());
+		List<Group> listGroup = groupService.findAllGroup();
+		List<Group> listGroupCheck = new LinkedList<Group>(listGroup);
+		for(Group group : listGroupCheck) {
+			if(group.getGroupName().equalsIgnoreCase("admin") || group.getGroupName().equalsIgnoreCase("helpdesk") || group.getGroupName().equalsIgnoreCase("groupmanager")) {
+				listGroup.remove(group);
+			}
+		}
+		return new ModelAndView("groupmanagers/groupmanager").addObject("groups", listGroup);
 	}	
 	
 	/**
@@ -86,7 +93,7 @@ public class GroupManagerController {
 	 * @param request La requête pour obtenir le nom du groupe
 	 * @return La vue vers l'ajout d'un utlisateur à un groupe
 	 */
-	@RequestMapping(value="/groupmanager/addUserToGroup", method=RequestMethod.POST)
+	@RequestMapping(value="/groupmanager/addUserToGroup", method=RequestMethod.GET)
 	public ModelAndView addUserToGroup(HttpServletRequest request) {
 		ModelAndView viewAddUSerToGroup = new ModelAndView("groupmanagers/addUserToGroup");
 		// Récupération de la liste des personnes disponibles pour l'ajout au groupe

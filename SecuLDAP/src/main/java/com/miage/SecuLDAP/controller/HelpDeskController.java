@@ -48,12 +48,12 @@ public class HelpDeskController {
 	public ModelAndView groupManagement() {
 		// Affiche uniquement les groupes visibles pour le helpdesk
 		List<Group> listGroup = groupService.findAllGroup();
-		/*List<Group> listGroupCheck = new LinkedList<Group>(listGroup);
+		List<Group> listGroupCheck = new LinkedList<Group>(listGroup);
 		for(Group group : listGroupCheck) {
 			if(group.getGroupName().equalsIgnoreCase("admin") || group.getGroupName().equalsIgnoreCase("helpdesk") || group.getGroupName().equalsIgnoreCase("groupmanager")) {
 				listGroup.remove(group);
 			}
-		}*/
+		}
 		return new ModelAndView("helpdesks/groupManagement").addObject("listGroup", listGroup);
 	}
 	

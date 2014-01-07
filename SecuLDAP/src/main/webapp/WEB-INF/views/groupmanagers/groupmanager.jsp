@@ -25,7 +25,7 @@
 	<br/>
 		<c:forEach items="${groups}" var="g">
 			<h4 class="text-muted">&nbsp;&nbsp;Groupe ${g.groupName}</h4>
-			<a href="/SecuLDAP/groupmanager/addUserToGroup?groupName=${group.groupName}">&nbsp;&nbsp;&nbsp;Ajouter un membre</a>
+			<a href="/SecuLDAP/groupmanager/addUserToGroup?groupName=${g.groupName}">&nbsp;&nbsp;&nbsp;Ajouter un membre</a>
 			<form action="/SecuLDAP/groupmanager/removeGroup" method="POST">	
 				<input type="hidden" name="groupName" value="${g.groupName}" />	
 				<button type="submit" role="button" class="customer btn btn-danger btn-xs">Supprimer le groupe</button>

@@ -1,10 +1,11 @@
 package com.miage.SecuLDAP.model;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class Group {
 	private String groupName;
-	private List<Person> groupMembers;
+	private List<Person> groupMembers = new LinkedList<Person>();
 	private String[] arrayDnMembers;
 	
 	public String getGroupName() {
