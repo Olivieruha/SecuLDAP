@@ -33,7 +33,7 @@ public class AdminController {
 	private Pattern pattern = Pattern.compile(PASSWORD_PATTERN);
 	private Matcher matcher;
 
-	@RequestMapping(value="/admin")
+	@RequestMapping(value="/admin/userManagement")
 	public ModelAndView admin() {
 		return new ModelAndView("admins/userManagement").addObject("listPerson", personService.findAllPerson());
 	}
@@ -128,7 +128,7 @@ public class AdminController {
 			return new ModelAndView("admins/editUser").addObject("createUserMessage", editUserMessage).addObject("validPasswordMessage", validPasswordMessage);
 		// Mise à jour de l'utilisateur et redirection
 		personService.updatePerson(person);
-		return new ModelAndView("redirect:/admin");
+		return new ModelAndView("redirect:/admin/userManagement");
 	}
 	
 	/**
@@ -141,7 +141,7 @@ public class AdminController {
 		// Modification du mot de passe et mise à jour de l'utilisateur
 		person.setUserPassword("sysmd7gd");
 		personService.updatePerson(person);
-		return "redirect:/admin";
+		return "redirect:/admin/userManagement";
 	}
 	
 	@RequestMapping(value="/admin/addGroup", method=RequestMethod.GET)
@@ -169,7 +169,7 @@ public class AdminController {
 	@RequestMapping(value="/admin/deleteGroup")
 	public ModelAndView deleteGroup(HttpSession session, HttpServletRequest request, HttpServletResponse response) {	
 		groupService.deleteGroup(groupService.findByPrimaryKey(request.getParameter("groupName")));
-		return new ModelAndView("redirect:/admin");
+		return new ModelAndView("redirect:/admin/groupManagement");
 	}
 	
 	/**
@@ -237,7 +237,7 @@ public class AdminController {
 			groupToBeCreated.setGroupMembers(groupMembers);
 			groupService.createGroup(groupToBeCreated);
 		}
-			return new ModelAndView("redirect:/admin");
+			return new ModelAndView("redirect:/admin/groupManagement");
 	}
 	
 	/**
@@ -259,7 +259,7 @@ public class AdminController {
 		group.getGroupMembers().remove(person);
 		groupService.updateGroup(group);
 		// Redirection vers la gestion des groupes
-		return new ModelAndView("redirect:/admin");
+		return new ModelAndView("redirect:/admin/groupManagement");
 	}
 	
 	@RequestMapping(value="/admin/deleteUser", method=RequestMethod.GET)
@@ -269,9 +269,8 @@ public class AdminController {
 		for(Group group : listGroup) {
 			// Si c'est le dernier membre d'un groupe, on empêche la suppression, on affiche un message d'erreur et on quitte
 			if(group.getGroupMembers().contains(person) && group.getGroupMembers().size() <= 1) {
-				System.out.println("est dernir");
 				String onlyGroupMemberMessage = person.getFullName() +" est le seul membre du groupe " + group.getGroupName();
-				return new ModelAndView("redirect:/admin").addObject("onlyGroupMemberMessage", onlyGroupMemberMessage);
+				return new ModelAndView("redirect:/admin/userManagement").addObject("onlyGroupMemberMessage", onlyGroupMemberMessage);
 			}			
 		}
 		// Si on est arrivé ici, c'est que la personne à supprimer n'est l'unique membre d'aucun groupe
@@ -283,6 +282,6 @@ public class AdminController {
 		}
 		// Suppression de la personne
 		personService.deletePerson(person);
-		return new ModelAndView("redirect:/admin");
+		return new ModelAndView("redirect:/admin/userManagement");
 	}
 }

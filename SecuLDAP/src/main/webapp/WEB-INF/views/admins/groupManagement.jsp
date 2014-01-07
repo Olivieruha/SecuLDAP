@@ -18,34 +18,17 @@
     </head>
     <body>
 		<br/>
-		<a href="<c:url value="j_spring_security_logout" />"> Logout</a>
-		<br/>
-		<a href="/SecuLDAP/admin/addGroup">Ajouter un groupe</a>
-		<br/>
 			<c:forEach items="${groups}" var="group">
 				<br/>
 				<h4 class="text-muted">&nbsp;&nbsp;Groupe ${group.groupName}</h4>
 				<hr/>
-				<table>
-					<form action="/SecuLDAP/admin/deleteGroup" method="POST">	
-						<input type="hidden" name="groupName" value="${group.groupName}" />	
-						<c:if test="${group.groupName !='admin'} or ${group.groupName !='helpdesk'}"><button type="submit" role="button" class="customer btn btn-danger btn-xs">Supprimer le groupe</button></c:if>
-					</form>		
-					<form action="/SecuLDAP/admin/addUserToGroup" method="POST">	
-						<input type="hidden" name="groupName" value="${group.groupName}" />	
-						<button type="submit" role="button" class="btn btn-primary btn-xs">Ajouter un membre</button>
-					</form>		
-				</table>
-				</th>
 				<table class="table table-hover table-condensed">	
 					<thead>
 						<tr>
 							<th>Utilisateur</th>
 							<th>Nom de famille</th>
 							<th>Modifier</th>
-							<th>Réinit. mot de passe</th>
 							<th>Supprimer du groupe</th>
-							<th>Supprimer l'utilisateur</th>
 						</tr>
 					</thead>
 					<tbody>							
@@ -59,26 +42,24 @@
 									</a>			
 								</td>
 								<td>
-									<a href="/SecuLDAP/admin/reinitPassword?fullName=${person.fullName}&lastName=${person.lastName}">
-									<img src="/SecuLDAP/resources/design/img/reinit_password.png"></img>
-									</a>
-								</td>
-								<td>
 									<a href="/SecuLDAP/admin/removeUserFromGroup?groupName=${group.groupName}&fullName=${person.fullName}" 
 									onclick="<c:if test="${fn:length(group.groupMembers) <= 1}">alert('Impossible de supprimer le dernier membre d\'un groupe !')</c:if>">
 										<img src="/SecuLDAP/resources/design/img/remove_user.png"></img>
 									</a>			
 								</td>
-								<td>
-									<a href="/SecuLDAP/admin/deleteUser?groupName=${group.groupName}&fullName=${person.fullName}" 
-									onclick="<c:if test="${fn:length(group.groupMembers) <= 1}">alert('Impossible de supprimer le dernier membre d\'un groupe !')</c:if>">
-										<img src="/SecuLDAP/resources/design/img/remove_user.png"></img>
-									</a>			
-								</td>
 				    		</tr>
-							</c:forEach>	
-					</form>
+						</c:forEach>	
 					</tbody>
+				</table>
+				<table>
+					<form action="/SecuLDAP/admin/deleteGroup" method="POST">	
+						<input type="hidden" name="groupName" value="${group.groupName}" />	
+						<c:if test="${group.groupName !='admin' and group.groupName !='helpdesk' and group.groupName !='groupmanager'}"><button type="submit" role="button" class="customer btn btn-danger btn-xs">Supprimer le groupe</button></c:if>
+					</form>		
+					<form action="/SecuLDAP/admin/addUserToGroup" method="POST">	
+						<input type="hidden" name="groupName" value="${group.groupName}" />	
+						<button type="submit" role="button" class="btn btn-primary btn-xs">Ajouter un membre</button>
+					</form>		
 				</table>
 			</c:forEach>	
 	</body>

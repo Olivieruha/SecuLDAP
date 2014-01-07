@@ -37,7 +37,7 @@
 		  <strong>Jonathan Rubiero</strong><br>
 		  <a href="mailto:rubiero.jonathan@gmail.com">rubiero.jonathan@gmail.com</a><br>
 		  <strong>Olivier Durrwell</strong><br>
-		  <a href="mailto:olivier.durrwell@uha.fr">olivier.durrwell@uha.fr</a>
+		  <a href="mailto:olivier.durrwell@gmail.com">olivier.durrwell@gmail.com</a>
 		</address>
 	</div>
 	

@@ -19,7 +19,7 @@ public class HomeController {
 	
 	@RequestMapping(value="/redirection")
 	public String redirectionAfterLogin(HttpServletRequest request) throws IOException{
-		if(request.isUserInRole("ROLE_ADMIN")) return "redirect:/admin";
+		if(request.isUserInRole("ROLE_ADMIN")) return "redirect:/admin/userManagement";
 		if(request.isUserInRole("ROLE_HELPDESK")) return "redirect:/helpdesk/userManagement";
 		if(request.isUserInRole("ROLE_GROUPMANAGER")) return "redirect:/groupmanager";
 		return "redirect:/user";			
