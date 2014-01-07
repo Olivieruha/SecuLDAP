@@ -44,7 +44,7 @@
 							<td>${person.fullName}</td>
 							<td>${person.lastName}</td>
 							<td>
-								<a href="/SecuLDAP/groupmanager/removeuser?groupName=${g.groupName}&fullName=${person.fullName}" 
+								<a href="/SecuLDAP/groupmanager/removeUserFromGroup?groupName=${g.groupName}&fullName=${person.fullName}" 
 								onclick="<c:if test="${fn:length(g.groupMembers) <= 1}">alert('Impossible de supprimer le dernier membre d\'un groupe !')</c:if>">
 									<img src="/SecuLDAP/resources/design/img/remove_user.png"></img>
 								</a>			

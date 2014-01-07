@@ -32,33 +32,36 @@ public class GroupManagerController {
 		return new ModelAndView("groupmanagers/groupmanager").addObject("groups", groupService.findAllGroup());
 	}	
 	
-	@RequestMapping(value="/groupmanager/removeuser", method=RequestMethod.GET)
-	public ModelAndView removeUser(HttpServletRequest request) {			
-		/*Group groupToBeUpdated = groupService.findByPrimaryKey(request.getParameter("groupName"));
-		List<Person> groupMembers = new LinkedList<Person>();
-		for(int i = 0 ; i < groupToBeUpdated.getArrayDnMembers().length ; ++i)
-		{			
-			if(!personService.findByDistinguishedName(groupToBeUpdated.getArrayDnMembers()[i]).getFullName().equals(request.getParameter("fullName")))
-				groupMembers.add(personService.findByDistinguishedName(groupToBeUpdated.getArrayDnMembers()[i]));
-		}	
-		groupToBeUpdated.setGroupMembers(groupMembers);
-		groupService.updateGroup(groupToBeUpdated);	*/
+	/**
+	 * Permet la suppression d'un utilisateur d'un groupe
+	 * @param request La requête pour obtenir le nom d'utilisateur et le nom du groupe
+	 * @return La redirection vers la gestion des groupes
+	 */
+	@RequestMapping(value="/groupmanager/removeUserFromGroup", method=RequestMethod.GET)
+	public ModelAndView removeUserFromGroup(HttpServletRequest request) {			
 		// Récupération de la personne à supprimer et du groupe concerné
 		Group group = groupService.findByPrimaryKey(request.getParameter("groupName"));
 		Person person = personService.findByPrimaryKey(request.getParameter("fullName"));
 		// Si il n'y a qu'un seul membre dans le groupe, on empêche la suppression de la personne
 		if(group.getGroupMembers().size() <= 1) {
-			return new ModelAndView("redirect:/groupmanager");
+			return new ModelAndView("redirect:/admin");
 		}	
 		// Suppression de la persone et mise à jour du groupe
 		group.getGroupMembers().remove(person);
 		groupService.updateGroup(group);
+		// Redirection vers la gestion des groupes
 		return new ModelAndView("redirect:/groupmanager");
 	}
 	
 	@RequestMapping(value="/groupmanager/addGroup", method=RequestMethod.GET)
 	public ModelAndView addGroup(HttpServletRequest request) {
 		return new ModelAndView("groupmanagers/addGroup");
+	}
+	
+	@RequestMapping(value="/groupmanager/deleteGroup")
+	public ModelAndView deleteGroup(HttpSession session, HttpServletRequest request, HttpServletResponse response) {	
+		groupService.deleteGroup(groupService.findByPrimaryKey(request.getParameter("groupName")));
+		return new ModelAndView("redirect:/groupmanager");
 	}
 	
 	@RequestMapping(value="/groupmanager/addGroupProcess", method=RequestMethod.POST)
@@ -85,7 +88,7 @@ public class GroupManagerController {
 	 */
 	@RequestMapping(value="/groupmanager/addUserToGroup", method=RequestMethod.POST)
 	public ModelAndView addUserToGroup(HttpServletRequest request) {
-		ModelAndView viewAddUSerToGroup = new ModelAndView("admins/addUserToGroup");
+		ModelAndView viewAddUSerToGroup = new ModelAndView("groupmanagers/addUserToGroup");
 		// Récupération de la liste des personnes disponibles pour l'ajout au groupe
 		List<Person> listPerson = personService.findAllPerson();
 		Group group = groupService.findByPrimaryKey(request.getParameter("groupName"));
@@ -114,7 +117,7 @@ public class GroupManagerController {
 		// Ajout de la personne au groupe et mise à jour du groupe
 		groupToUpdate.getGroupMembers().add(personToAdd);
 		groupService.updateGroup(groupToUpdate);	
-		return new ModelAndView("redirect:/groupmanagers/groupManagement");
+		return new ModelAndView("redirect:/groupmanager");
 	}
 	
 	@RequestMapping(value="/groupmanager/removeGroup")

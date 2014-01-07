@@ -219,7 +219,6 @@ public class AdminController {
 	 */
 	@RequestMapping(value="/admin/removeUserFromGroup", method=RequestMethod.GET)
 	public ModelAndView removeUserFromGroup(HttpServletRequest request) {
-		//Test
 		// Récupération de la personne à supprimer et du groupe concerné
 		Group group = groupService.findByPrimaryKey(request.getParameter("groupName"));
 		Person person = personService.findByPrimaryKey(request.getParameter("fullName"));
