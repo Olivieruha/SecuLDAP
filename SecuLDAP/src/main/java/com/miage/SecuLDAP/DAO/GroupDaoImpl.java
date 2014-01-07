@@ -54,7 +54,7 @@ public class GroupDaoImpl implements GroupDao {
 
 	@Override
 	public List<?> findAll() {
-		EqualsFilter filter = new EqualsFilter("objectclass", "groupOfNames");
+		EqualsFilter filter = new EqualsFilter("objectclass", "group");
 	    return ldapTemplate.search(DistinguishedName.EMPTY_PATH, filter.encode(), getContextMapper());
 	}
 
@@ -80,7 +80,7 @@ public class GroupDaoImpl implements GroupDao {
 
 	@Override
 	public void mapToContext(Group group, DirContextAdapter context) {
-		context.setAttributeValues("objectclass", new String[] {"groupOfNames", "top"});
+		context.setAttributeValues("objectclass", new String[] {"group", "top"});
 	    context.setAttributeValue("cn", group.getGroupName());
 	    context.setAttributeValues("member", null);
 	    
