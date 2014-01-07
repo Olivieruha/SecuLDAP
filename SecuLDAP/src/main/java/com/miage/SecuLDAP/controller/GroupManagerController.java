@@ -93,11 +93,48 @@ public class GroupManagerController {
 	public ModelAndView addGroupProcess(HttpServletRequest request) {	
 		Group groupToBeCreated = new Group();
 		groupToBeCreated.setGroupName(request.getParameter("groupName"));
-		List<Person> groupMembers = new LinkedList<Person>();
-		groupMembers.add(personService.findByPrimaryKey("jonathan.rubiero"));
-		groupToBeCreated.setGroupMembers(groupMembers);
 		groupService.createGroup(groupToBeCreated);
-		return new ModelAndView("redirect:/groupmanager");
+		return new ModelAndView("redirect:/groupmanager/addUserToGroup").addObject("groupName", groupToBeCreated.getGroupName());
+	}
+	
+	/**
+	 * Permet de créer la page d'ajout d'un utilisateur à un groupe
+	 * @param request La requête pour obtenir le nom du groupe
+	 * @return La vue vers l'ajout d'un utlisateur à un groupe
+	 */
+	@RequestMapping(value="/groupManager/addUserToGroup", method=RequestMethod.GET)
+	public ModelAndView addUserToGroup(HttpServletRequest request) {
+		ModelAndView viewAddUSerToGroup = new ModelAndView("groupmanagers/addUserToGroup");
+		// Récupération de la liste des personnes disponibles pour l'ajout au groupe
+		List<Person> listPerson = personService.findAllPerson();
+		//Récupération du groupe
+		Group group = groupService.findByPrimaryKey(request.getParameter("groupName"));
+		// Vérification : si des personnes appartiennent déjà au groupe, elle ne feront pas partie de la liste des personnes disponibles
+		List<Person> listPersonCheck = new LinkedList<Person>(listPerson); // Création d'un seconde liste pour la vérification 
+		for(Person person : listPersonCheck) {
+			if(group.getGroupMembers().contains(person))
+				listPerson.remove(person);
+		}
+		// Ajout des objets à la vue
+		viewAddUSerToGroup.addObject("listPerson", listPerson);
+		viewAddUSerToGroup.addObject("groupName", group.getGroupName());		
+		return viewAddUSerToGroup;
+	}
+	
+	/**
+	 * Permet d'ajouter un utilisateur à un groupe
+	 * @param request La requête pour obtenir le nom d'utilisateur et le nom du groupe
+	 * @return La redirection vers la gestion des groupes
+	 */
+	@RequestMapping(value="/groupeManager/addUserToGroupProcess", method=RequestMethod.GET)
+	public ModelAndView addUserToGroupProcess(HttpServletRequest request) {
+		// Récupération du groupe et de la personne à ajouter
+		Person personToAdd = personService.findByPrimaryKey(request.getParameter("fullName"));
+		Group groupToUpdate = groupService.findByPrimaryKey(request.getParameter("groupName"));		
+		// Ajout de la personne au groupe et mise à jour du groupe
+		groupToUpdate.getGroupMembers().add(personToAdd);
+		groupService.updateGroup(groupToUpdate);
+		return new ModelAndView("redirect:/helpdesk/groupManagement");
 	}
 	
 	@RequestMapping(value="/groupmanager/removegroup")

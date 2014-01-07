@@ -48,12 +48,12 @@ public class HelpDeskController {
 	public ModelAndView groupManagement() {
 		// Affiche uniquement les groupes visibles pour le helpdesk
 		List<Group> listGroup = groupService.findAllGroup();
-		List<Group> listGroupCheck = new LinkedList<Group>(listGroup);
+		/*List<Group> listGroupCheck = new LinkedList<Group>(listGroup);
 		for(Group group : listGroupCheck) {
-			if(group.getGroupName().equals("admin") || group.getGroupName().equals("helpdesk") || group.getGroupName().equals("groupmanager")) {
+			if(group.getGroupName().equalsIgnoreCase("admin") || group.getGroupName().equalsIgnoreCase("helpdesk") || group.getGroupName().equalsIgnoreCase("groupmanager")) {
 				listGroup.remove(group);
 			}
-		}
+		}*/
 		return new ModelAndView("helpdesks/groupManagement").addObject("listGroup", listGroup);
 	}
 	
@@ -150,7 +150,7 @@ public class HelpDeskController {
 	 * @param person L'utilisateur en question
 	 * @return La redirection vers la gestion des utilisateurs
 	 */
-	@RequestMapping(value="/helpdesk/deleteUser", method=RequestMethod.GET)
+	/*@RequestMapping(value="/helpdesk/deleteUser", method=RequestMethod.GET)
 	public ModelAndView deleteUser(Person person) {
 		List<Group> listGroup = groupService.findAllGroup();
 		for(Group group : listGroup) {
@@ -170,7 +170,7 @@ public class HelpDeskController {
 		// Suppression de la personne
 		personService.deletePerson(person);
 		return new ModelAndView("redirect:/helpdesk/userManagement");
-	}
+	}*/
 	
 	/**
 	 * Permet de réinitialiser le mot de passe d'un utilisateur 

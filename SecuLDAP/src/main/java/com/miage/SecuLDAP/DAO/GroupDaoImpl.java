@@ -84,8 +84,10 @@ public class GroupDaoImpl implements GroupDao {
 	    context.setAttributeValue("cn", group.getGroupName());
 	    context.setAttributeValues("member", null);
 	    
-	    for(Person person : group.getGroupMembers())
-	    	context.addAttributeValue("member", person.toString(), false);
+	    if(group.getGroupMembers()!=null) {
+		    for(Person person : group.getGroupMembers())
+		    	context.addAttributeValue("member", person.toString(), false);
+		}
 	}
 	
    private static class GroupContextMapper implements ContextMapper 

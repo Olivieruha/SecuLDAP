@@ -1,4 +1,3 @@
-
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
@@ -22,12 +21,7 @@
 </head>
 
 <body>
-<br/>
-	<th>
-		<a href="<c:url value="j_spring_security_logout" />"> Logout</a>
-	</th>
 	<br/>
-	<a href="/SecuLDAP/groupmanager/addGroup">&nbsp;Ajouter un groupe</a>
 	<br/>
 		<c:forEach items="${groups}" var="g">
 			<h4 class="text-muted">&nbsp;&nbsp;Groupe ${g.groupName}</h4>
@@ -36,7 +30,6 @@
 				<input type="hidden" name="groupName" value="${g.groupName}" />	
 				<button type="submit" role="button" class="customer btn btn-danger btn-xs">Supprimer le groupe</button>
 			</form>		
-			</th>
 			<table class="table table-hover table-condensed">	
 				<thead>
 					<tr>
@@ -64,20 +57,8 @@
 							</td>
 			    		</tr>
 						</c:forEach>	
-				<form modelAttribute="person" action="/SecuLDAP/groupmanager/adduser" method="POST">
-					<input type="hidden" name="groupName" value="${g.groupName}" />	
-					<th><input path="fullName" type="text" name="fullName" class="form-control-fix" placeholder="User fullName"/></th>
-					<th><input path="lastName" type="text" name="lastName" class="form-control-fix" placeholder="User lastName"/></th>
-					<th><button type="submit" role="button" class="btn btn-primary btn-xs"">Ajouter au groupe</button></th>
-					<th></th>
-				</form>
 				</tbody>
 			</table>
-		</c:forEach>
-		
-	<form:form action="/SecuLDAP/groupmanager/addgroup">	
-		<input  path="groupName" type="text" name="groupName" placeholder="Group Name"/>
-		<button type="submit" role="button" class="btn btn-primary btn-xs">Ajouter le groupe</button>
-	</form:form>	
+		</c:forEach>	
 </body>
 </html>

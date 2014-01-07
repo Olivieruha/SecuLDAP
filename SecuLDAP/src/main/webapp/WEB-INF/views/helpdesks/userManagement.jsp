@@ -22,7 +22,7 @@
 			<th>Utilisateur</th>
 			<th>Nom de famille</th>
 			<th>Modifier</th>
-			<th>Supprimer</th>
+			<!--<th>Supprimer</th>-->
 			<th>Réinit. mot de passe</th>
 		</tr>
 		<c:forEach items="${listPerson}" var="person">
@@ -35,11 +35,11 @@
 							<img src="/SecuLDAP/resources/design/img/edit_user.png"></img>
 						</a>			
 					</td>
-					<td>
+					<!--<td>
 						<a href="/SecuLDAP/helpdesk/deleteUser?fullName=${person.fullName}">
 							<img src="/SecuLDAP/resources/design/img/remove_user.png"></img>
 						</a>			
-					</td>
+					</td>-->
 					<td>
 						<a href="/SecuLDAP/helpdesk/reinitPassword?fullName=${person.fullName}&lastName=${person.lastName}">
 							<img src="/SecuLDAP/resources/design/img/reinit_password.png"></img>

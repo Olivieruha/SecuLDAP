@@ -38,9 +38,11 @@ public class GroupServiceImpl implements GroupService {
 	public Group findByPrimaryKey(String name) {
 		Group group = groupDao.findByPrimaryKey(name);
 		List<Person> groupMembers = new LinkedList<Person>();
-		for(int i = 0 ; i < group.getArrayDnMembers().length ; ++i)
-			groupMembers.add(personService.findByDistinguishedName(group.getArrayDnMembers()[i]));
-		group.setGroupMembers(groupMembers);
+		if(group.getArrayDnMembers() != null) {
+			for(int i = 0 ; i < group.getArrayDnMembers().length ; ++i)
+				groupMembers.add(personService.findByDistinguishedName(group.getArrayDnMembers()[i]));
+			group.setGroupMembers(groupMembers);
+		}
 		return group; //groupDao.findByPrimaryKey(name);
 	}
 

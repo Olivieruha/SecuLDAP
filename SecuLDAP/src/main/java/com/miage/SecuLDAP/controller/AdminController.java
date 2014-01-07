@@ -1,6 +1,5 @@
 package com.miage.SecuLDAP.controller;
 
-import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -85,7 +84,7 @@ public class AdminController {
 			return new ModelAndView("admins/addUser").addObject("createUserMessage", createUserMessage).addObject("validPasswordMessage", validPasswordMessage);
 		// Création de l'utilisateur et redirection
 		personService.createPerson(person);
-		return new ModelAndView("redirect:/admin");
+		return new ModelAndView("redirect:/admin/userManagement");
 	}
 
 	/**
@@ -150,6 +149,23 @@ public class AdminController {
 		return new ModelAndView("/admins/addGroup");
 	}
 	
+	@RequestMapping(value="/admin/addGroupProcess", method=RequestMethod.POST)
+	public ModelAndView addGroupProcess(@ModelAttribute Group group) {
+		// Message d'alerte si le groupe existe déja
+		String groupAlreadyExistMessage = "";
+		// Récupération de la liste des groupes pour vérification
+		List<Group> listGroup = groupService.findAllGroup();
+		for(Group g : listGroup) {
+			if(g.getGroupName().equalsIgnoreCase(group.getGroupName())) {
+				groupAlreadyExistMessage = "Le groupe existe déjà !!!";
+				return new ModelAndView("/admins/addGroup").addObject("groupeAlreadyExistMessage", groupAlreadyExistMessage);
+			}
+		}
+		// Création du groupe
+		groupService.createGroup(group);
+		return new ModelAndView("redirect:/admin/groupManagement");
+	}
+	
 	@RequestMapping(value="/admin/deleteGroup")
 	public ModelAndView deleteGroup(HttpSession session, HttpServletRequest request, HttpServletResponse response) {	
 		groupService.deleteGroup(groupService.findByPrimaryKey(request.getParameter("groupName")));
@@ -169,17 +185,13 @@ public class AdminController {
 		//Récupération du groupe
 		boolean groupExist=false;
 		for(Group group : groupService.findAllGroup())
-			if(group.getGroupName().equals(request.getParameter("groupName")))
-			{
+			if(group.getGroupName().equals(request.getParameter("groupName"))) {
 				groupExist=true; break;
 			}
-		if(!groupExist)
-		{
+		if(!groupExist) {
 			Group group = new Group();
 			group.setGroupName(request.getParameter("groupName"));
-		}
-		else
-		{
+		} else {
 			Group group = groupService.findByPrimaryKey(request.getParameter("groupName"));
 			// Vérification : si des personnes appartiennent déjà au groupe, elle ne feront pas partie de la liste des personnes disponibles
 			List<Person> listPersonCheck = new LinkedList<Person>(listPerson); // Création d'un seconde liste pour la vérification 

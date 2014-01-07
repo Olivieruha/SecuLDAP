@@ -29,17 +29,13 @@
 				<table>
 					<form action="/SecuLDAP/admin/deleteGroup" method="POST">	
 						<input type="hidden" name="groupName" value="${group.groupName}" />	
-						<button type="submit" role="button" class="customer btn btn-danger btn-xs">Supprimer le groupe</button>
+						<c:if test="${group.groupName !='admin'} or ${group.groupName !='helpdesk'}"><button type="submit" role="button" class="customer btn btn-danger btn-xs">Supprimer le groupe</button></c:if>
 					</form>		
 					<form action="/SecuLDAP/admin/addUserToGroup" method="POST">	
 						<input type="hidden" name="groupName" value="${group.groupName}" />	
 						<button type="submit" role="button" class="btn btn-primary btn-xs">Ajouter un membre</button>
 					</form>		
 				</table>
-				<!-- 
-				<a href="/SecuLDAP/admin/deleteGroup?groupName=${group.groupName}">&nbsp;&nbsp;&nbsp;Supprimer le groupe</a>
-				<a href="/SecuLDAP/admin/addUserToGroup?groupName=${group.groupName}">&nbsp;&nbsp;&nbsp;Ajouter un membre</a>	
-				 -->
 				</th>
 				<table class="table table-hover table-condensed">	
 					<thead>
