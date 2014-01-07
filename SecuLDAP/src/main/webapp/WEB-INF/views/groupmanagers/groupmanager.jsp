@@ -25,8 +25,8 @@
 	<br/>
 		<c:forEach items="${groups}" var="g">
 			<h4 class="text-muted">&nbsp;&nbsp;Groupe ${g.groupName}</h4>
-			<a href="/SecuLDAP/helpdesk/addUserToGroup?groupName=${group.groupName}">&nbsp;&nbsp;&nbsp;Ajouter un membre</a>
-			<form action="/SecuLDAP/groupmanager/removegroup" method="POST">	
+			<a href="/SecuLDAP/groupmanager/addUserToGroup?groupName=${group.groupName}">&nbsp;&nbsp;&nbsp;Ajouter un membre</a>
+			<form action="/SecuLDAP/groupmanager/removeGroup" method="POST">	
 				<input type="hidden" name="groupName" value="${g.groupName}" />	
 				<button type="submit" role="button" class="customer btn btn-danger btn-xs">Supprimer le groupe</button>
 			</form>		
@@ -35,7 +35,6 @@
 					<tr>
 						<th>Utilisateur</th>
 						<th>Nom de famille</th>
-						<th>Modifier</th>
 						<th>Supprimer du groupe</th>
 					</tr>
 				</thead>
@@ -44,11 +43,6 @@
 						<tr>
 							<td>${person.fullName}</td>
 							<td>${person.lastName}</td>
-							<td>
-								<a href="/SecuLDAP/groupmanager/edituser?groupName=${g.groupName}&fullName=${person.fullName}" >
-									<img src="/SecuLDAP/resources/design/img/edit_user.png"></img>
-								</a>			
-							</td>
 							<td>
 								<a href="/SecuLDAP/groupmanager/removeuser?groupName=${g.groupName}&fullName=${person.fullName}" 
 								onclick="<c:if test="${fn:length(g.groupMembers) <= 1}">alert('Impossible de supprimer le dernier membre d\'un groupe !')</c:if>">

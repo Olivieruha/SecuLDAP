@@ -25,7 +25,7 @@
 					<td>${person.fullName}</td>
 					<td>${person.lastName}</td>
 					<td>
-						<a href="/SecuLDAP/helpdesk/addUserToGroupProcess?fullName=${person.fullName}&groupName=${groupName}">
+						<a href="/SecuLDAP/groupmanager/addUserToGroupProcess?fullName=${person.fullName}&groupName=${groupName}">
 							<img src="/SecuLDAP/resources/design/img/add_user_group.png"></img>
 						</a>			
 					</td>

@@ -1,15 +1,15 @@
 package com.miage.SecuLDAP.controller;
 
-import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ldap.NameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,33 +32,7 @@ public class GroupManagerController {
 	@RequestMapping(value="/groupmanager")
 	public ModelAndView groupManager(HttpServletResponse response){
 		return new ModelAndView("groupmanagers/groupmanager").addObject("groups", groupService.findAllGroup());
-	}
-	
-	@RequestMapping(value="/groupmanager/adduser")
-	public ModelAndView addUser(HttpSession session, HttpServletRequest request, HttpServletResponse response, Person person) throws IOException{
-		Person personToBeCreated = person;
-		personToBeCreated.setUserPassword("sysmd7gd");
-		System.out.println(personToBeCreated.getFullName());
-		
-		try {
-			if(!person.getFullName().equals(personService.findByPrimaryKey(person.getFullName())));
-		} catch(NameNotFoundException nNFE) {
-			personService.createPerson(personToBeCreated);
-		}
-		
-		Group groupToBeUpdated = groupService.findByPrimaryKey(request.getParameter("groupName"));
-		List<Person> groupMembers = new LinkedList<Person>();
-		for(int i = 0 ; i < groupToBeUpdated.getArrayDnMembers().length ; ++i)
-			groupMembers.add(personService.findByDistinguishedName((groupToBeUpdated.getArrayDnMembers()[i])));
-		groupMembers.add(personToBeCreated);
-		groupToBeUpdated.setGroupMembers(groupMembers);
-
-		for(Person p : groupToBeUpdated.getGroupMembers()) {
-			System.out.println(p.getFullName());
-		}
-		groupService.updateGroup(groupToBeUpdated);	
-		return new ModelAndView("redirect:/groupmanager");
-	}
+	}	
 	
 	@RequestMapping(value="/groupmanager/removeuser", method=RequestMethod.GET)
 	public ModelAndView removeUser(HttpServletRequest request) {			
@@ -94,7 +68,7 @@ public class GroupManagerController {
 		Group groupToBeCreated = new Group();
 		groupToBeCreated.setGroupName(request.getParameter("groupName"));
 		groupService.createGroup(groupToBeCreated);
-		return new ModelAndView("redirect:/groupmanager/addUserToGroup").addObject("groupName", groupToBeCreated.getGroupName());
+		return new ModelAndView("redirect:/groupmanagers/addUserToGroup").addObject("groupName", groupToBeCreated.getGroupName());
 	}
 	
 	/**
@@ -102,7 +76,7 @@ public class GroupManagerController {
 	 * @param request La requête pour obtenir le nom du groupe
 	 * @return La vue vers l'ajout d'un utlisateur à un groupe
 	 */
-	@RequestMapping(value="/groupManager/addUserToGroup", method=RequestMethod.GET)
+	@RequestMapping(value="/groupmanager/addUserToGroup", method=RequestMethod.GET)
 	public ModelAndView addUserToGroup(HttpServletRequest request) {
 		ModelAndView viewAddUSerToGroup = new ModelAndView("groupmanagers/addUserToGroup");
 		// Récupération de la liste des personnes disponibles pour l'ajout au groupe
@@ -126,7 +100,7 @@ public class GroupManagerController {
 	 * @param request La requête pour obtenir le nom d'utilisateur et le nom du groupe
 	 * @return La redirection vers la gestion des groupes
 	 */
-	@RequestMapping(value="/groupeManager/addUserToGroupProcess", method=RequestMethod.GET)
+	@RequestMapping(value="/groupmanager/addUserToGroupProcess", method=RequestMethod.GET)
 	public ModelAndView addUserToGroupProcess(HttpServletRequest request) {
 		// Récupération du groupe et de la personne à ajouter
 		Person personToAdd = personService.findByPrimaryKey(request.getParameter("fullName"));
@@ -134,41 +108,12 @@ public class GroupManagerController {
 		// Ajout de la personne au groupe et mise à jour du groupe
 		groupToUpdate.getGroupMembers().add(personToAdd);
 		groupService.updateGroup(groupToUpdate);
-		return new ModelAndView("redirect:/helpdesk/groupManagement");
+		return new ModelAndView("redirect:/groupmanagers/groupManagement");
 	}
 	
-	@RequestMapping(value="/groupmanager/removegroup")
+	@RequestMapping(value="/groupmanager/removeGroup")
 	public ModelAndView removeGroup(HttpSession session, HttpServletRequest request, HttpServletResponse response) {	
 		groupService.deleteGroup(groupService.findByPrimaryKey(request.getParameter("groupName")));
 		return new ModelAndView("redirect:/groupmanager");
-	}
-	
-	@RequestMapping(value="/groupmanager/edituser", method=RequestMethod.GET)
-	public ModelAndView editUser(Person person) {
-		return new ModelAndView("helpdesks/editUser").addObject("person", person);
-	}
-	
-	@RequestMapping(value="/groupmanager/editUserProcess", method=RequestMethod.POST)
-	public ModelAndView editUserProcess(@ModelAttribute Person person) {	
-		// Messages d'alertes si un des champs est mal renseigné
-		String editUserMessage = "";
-		String validPasswordMessage ="";
-		boolean isValid = true;
-		// Construction des messages d'alertes...
-		if(person.getFullName().isEmpty() || person.getFullName() == null) {
-			editUserMessage+="Merci de saisir un nom d'utilisateur.\n";
-			isValid = false;
-		}
-		if(person.getLastName().isEmpty() || person.getLastName() == null) {
-			editUserMessage+="Merci de saisir un nom de famille.";
-			isValid = false;
-		}
-		if(!isValid)
-			return new ModelAndView("helpdesks/editUser").addObject("createUserMessage", editUserMessage).addObject("validPasswordMessage", validPasswordMessage);
-		// Mise à jour de l'utilisateur et redirection
-		personService.updatePerson(person);
-		return new ModelAndView("redirect:/groupmanager/");
-	}
-	
-	
+	}	
 }
