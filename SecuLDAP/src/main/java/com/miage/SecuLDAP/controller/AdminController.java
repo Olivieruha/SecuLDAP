@@ -183,23 +183,13 @@ public class AdminController {
 		// Récupération de la liste des personnes disponibles pour l'ajout au groupe
 		List<Person> listPerson = personService.findAllPerson();
 		//Récupération du groupe
-		boolean groupExist=false;
-		for(Group group : groupService.findAllGroup())
-			if(group.getGroupName().equals(request.getParameter("groupName"))) {
-				groupExist=true; break;
-			}
-		if(!groupExist) {
-			Group group = new Group();
-			group.setGroupName(request.getParameter("groupName"));
-		} else {
-			Group group = groupService.findByPrimaryKey(request.getParameter("groupName"));
+		Group group = groupService.findByPrimaryKey(request.getParameter("groupName"));
 			// Vérification : si des personnes appartiennent déjà au groupe, elle ne feront pas partie de la liste des personnes disponibles
-			List<Person> listPersonCheck = new LinkedList<Person>(listPerson); // Création d'un seconde liste pour la vérification 
-			for(Person person : listPersonCheck) {
-				if(group.getGroupMembers().contains(person))
-					listPerson.remove(person);
+		List<Person> listPersonCheck = new LinkedList<Person>(listPerson); // Création d'un seconde liste pour la vérification 
+		for(Person person : listPersonCheck) {
+			if(group.getGroupMembers().contains(person))
+				listPerson.remove(person);
 			}
-		}
 		// Ajout des objets à la vue
 		viewAddUSerToGroup.addObject("listPerson", listPerson);
 		viewAddUSerToGroup.addObject("groupName", request.getParameter("groupName"));		
@@ -213,31 +203,13 @@ public class AdminController {
 	 */
 	@RequestMapping(value="/admin/addUserToGroupProcess", method=RequestMethod.GET)
 	public ModelAndView addUserToGroupProcess(HttpServletRequest request) {
-		boolean groupExist=false;
-		for(Group group : groupService.findAllGroup())
-			if(group.getGroupName().equals(request.getParameter("groupName")))
-			{
-				groupExist=true; break;
-			}
-		if(groupExist)
-		{
-			// Récupération du groupe et de la personne à ajouter
-			Person personToAdd = personService.findByPrimaryKey(request.getParameter("fullName"));
-			Group groupToUpdate = groupService.findByPrimaryKey(request.getParameter("groupName"));		
-			// Ajout de la personne au groupe et mise à jour du groupe
-			groupToUpdate.getGroupMembers().add(personToAdd);
-			groupService.updateGroup(groupToUpdate);
-		}
-		else
-		{
-			Group groupToBeCreated = new Group();
-			groupToBeCreated.setGroupName(request.getParameter("groupName"));
-			List<Person> groupMembers = new LinkedList<Person>();
-			groupMembers.add(personService.findByPrimaryKey(request.getParameter("fullName")));
-			groupToBeCreated.setGroupMembers(groupMembers);
-			groupService.createGroup(groupToBeCreated);
-		}
-			return new ModelAndView("redirect:/admin/groupManagement");
+		// Récupération du groupe et de la personne à ajouter
+		Person personToAdd = personService.findByPrimaryKey(request.getParameter("fullName"));
+		Group groupToUpdate = groupService.findByPrimaryKey(request.getParameter("groupName"));		
+		// Ajout de la personne au groupe et mise à jour du groupe
+		groupToUpdate.getGroupMembers().add(personToAdd);
+		groupService.updateGroup(groupToUpdate);
+		return new ModelAndView("redirect:/admin/groupManagement");
 	}
 	
 	/**

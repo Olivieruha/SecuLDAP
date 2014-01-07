@@ -2,8 +2,6 @@ package com.miage.SecuLDAP.controller;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -63,25 +61,33 @@ public class GroupManagerController {
 		return new ModelAndView("groupmanagers/addGroup");
 	}
 	
-	@RequestMapping(value="/groupmanager/addGroupProcess")
-	public ModelAndView addGroupProcess(HttpServletRequest request) {	
-		Group groupToBeCreated = new Group();
-		groupToBeCreated.setGroupName(request.getParameter("groupName"));
-		groupService.createGroup(groupToBeCreated);
-		return new ModelAndView("redirect:/groupmanagers/addUserToGroup").addObject("groupName", groupToBeCreated.getGroupName());
+	@RequestMapping(value="/groupmanager/addGroupProcess", method=RequestMethod.POST)
+	public ModelAndView addGroupProcess(@ModelAttribute Group group) {
+		// Message d'alerte si le groupe existe déja
+		String groupAlreadyExistMessage = "";
+		// Récupération de la liste des groupes pour vérification
+		List<Group> listGroup = groupService.findAllGroup();
+		for(Group g : listGroup) {
+			if(g.getGroupName().equalsIgnoreCase(group.getGroupName())) {
+				groupAlreadyExistMessage = "Le groupe existe déjà !!!";
+				return new ModelAndView("/groupmanagers/addGroup").addObject("groupeAlreadyExistMessage", groupAlreadyExistMessage);
+			}
+		}
+		// Création du groupe
+		groupService.createGroup(group);
+		return new ModelAndView("redirect:/groupmanager");
 	}
 	
 	/**
-	 * Permet de créer la page d'ajout d'un utilisateur à un groupe
+	 * Permet de créer la page d'ajout d'un utilisateur à un groupe et la création du-dit groupe s'il n'existe pas
 	 * @param request La requête pour obtenir le nom du groupe
 	 * @return La vue vers l'ajout d'un utlisateur à un groupe
 	 */
-	@RequestMapping(value="/groupmanager/addUserToGroup", method=RequestMethod.GET)
+	@RequestMapping(value="/groupmanager/addUserToGroup", method=RequestMethod.POST)
 	public ModelAndView addUserToGroup(HttpServletRequest request) {
-		ModelAndView viewAddUSerToGroup = new ModelAndView("groupmanagers/addUserToGroup");
+		ModelAndView viewAddUSerToGroup = new ModelAndView("admins/addUserToGroup");
 		// Récupération de la liste des personnes disponibles pour l'ajout au groupe
 		List<Person> listPerson = personService.findAllPerson();
-		//Récupération du groupe
 		Group group = groupService.findByPrimaryKey(request.getParameter("groupName"));
 		// Vérification : si des personnes appartiennent déjà au groupe, elle ne feront pas partie de la liste des personnes disponibles
 		List<Person> listPersonCheck = new LinkedList<Person>(listPerson); // Création d'un seconde liste pour la vérification 
@@ -91,7 +97,7 @@ public class GroupManagerController {
 		}
 		// Ajout des objets à la vue
 		viewAddUSerToGroup.addObject("listPerson", listPerson);
-		viewAddUSerToGroup.addObject("groupName", group.getGroupName());		
+		viewAddUSerToGroup.addObject("groupName", request.getParameter("groupName"));		
 		return viewAddUSerToGroup;
 	}
 	
@@ -107,7 +113,7 @@ public class GroupManagerController {
 		Group groupToUpdate = groupService.findByPrimaryKey(request.getParameter("groupName"));		
 		// Ajout de la personne au groupe et mise à jour du groupe
 		groupToUpdate.getGroupMembers().add(personToAdd);
-		groupService.updateGroup(groupToUpdate);
+		groupService.updateGroup(groupToUpdate);	
 		return new ModelAndView("redirect:/groupmanagers/groupManagement");
 	}
 	
