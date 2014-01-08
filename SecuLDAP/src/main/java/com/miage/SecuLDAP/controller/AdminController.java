@@ -6,8 +6,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -188,7 +186,7 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value="/admin/deleteGroup")
-	public ModelAndView deleteGroup(HttpSession session, HttpServletRequest request, HttpServletResponse response) {	
+	public ModelAndView deleteGroup(HttpServletRequest request) {	
 		groupService.deleteGroup(groupService.findByPrimaryKey(request.getParameter("groupName")));
 		return new ModelAndView("redirect:/admin/groupManagement");
 	}
@@ -198,7 +196,7 @@ public class AdminController {
 	 * @param request La requête pour obtenir le nom du groupe
 	 * @return La vue vers l'ajout d'un utlisateur à un groupe
 	 */
-	@RequestMapping(value="/admin/addUserToGroup", method=RequestMethod.POST)
+	@RequestMapping(value="/admin/addUserToGroup", method=RequestMethod.GET)
 	public ModelAndView addUserToGroup(HttpServletRequest request) {
 		ModelAndView viewAddUSerToGroup = new ModelAndView("admins/addUserToGroup");
 		// Récupération de la liste des personnes disponibles pour l'ajout au groupe

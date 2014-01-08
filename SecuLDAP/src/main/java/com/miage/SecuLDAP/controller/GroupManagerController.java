@@ -48,11 +48,7 @@ public class GroupManagerController {
 	public ModelAndView removeUserFromGroup(HttpServletRequest request) {			
 		// Récupération de la personne à supprimer et du groupe concerné
 		Group group = groupService.findByPrimaryKey(request.getParameter("groupName"));
-		Person person = personService.findByPrimaryKey(request.getParameter("fullName"));
-		// Si il n'y a qu'un seul membre dans le groupe, on empêche la suppression de la personne
-		if(group.getGroupMembers().size() <= 1) {
-			return new ModelAndView("redirect:/groupmanager");
-		}	
+		Person person = personService.findByPrimaryKey(request.getParameter("fullName"));	
 		// Suppression de la persone et mise à jour du groupe
 		group.getGroupMembers().remove(person);
 		groupService.updateGroup(group);
@@ -127,8 +123,8 @@ public class GroupManagerController {
 		return new ModelAndView("redirect:/groupmanager");
 	}
 	
-	@RequestMapping(value="/groupmanager/removeGroup")
-	public ModelAndView removeGroup(HttpSession session, HttpServletRequest request, HttpServletResponse response) {	
+	@RequestMapping(value="/groupmanager/removeGroup", method=RequestMethod.GET)
+	public ModelAndView removeGroup(HttpServletRequest request) {	
 		groupService.deleteGroup(groupService.findByPrimaryKey(request.getParameter("groupName")));
 		return new ModelAndView("redirect:/groupmanager");
 	}	

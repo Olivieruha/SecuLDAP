@@ -24,18 +24,18 @@
 	<br/>
 	<br/>
 		<c:forEach items="${groups}" var="g">
-			<h4 class="text-muted">&nbsp;&nbsp;Groupe ${g.groupName}</h4>
-			<a href="/SecuLDAP/groupmanager/addUserToGroup?groupName=${g.groupName}">&nbsp;&nbsp;&nbsp;Ajouter un membre</a>
-			<form action="/SecuLDAP/groupmanager/removeGroup" method="POST">	
-				<input type="hidden" name="groupName" value="${g.groupName}" />	
-				<button type="submit" role="button" class="customer btn btn-danger btn-xs">Supprimer le groupe</button>
-			</form>		
+			<h4 class="text-muted">&nbsp;&nbsp;Groupe ${g.groupName}
+				<a href="/SecuLDAP/groupmanager/removeGroup?groupName=${g.groupName}" style="text-decoration:none">&nbsp;
+					<img src="/SecuLDAP/resources/design/img/delete_group.png"/>
+				</a>
+			</h4>
+			<a href="/SecuLDAP/groupmanager/addUserToGroup?groupName=${g.groupName}" style="text-decoration:none">&nbsp;&nbsp;&nbsp;Ajouter un membre</a>
 			<table class="table table-hover table-condensed">	
 				<thead>
 					<tr>
-						<th>Utilisateur</th>
-						<th>Nom de famille</th>
-						<th>Supprimer du groupe</th>
+						<th style="width:33%;">Utilisateur</th>
+						<th style="width:33%;">Nom de famille</th>
+						<th style="width:33%;">Supprimer du groupe</th>
 					</tr>
 				</thead>
 				<tbody>							
@@ -44,8 +44,7 @@
 							<td>${person.fullName}</td>
 							<td>${person.lastName}</td>
 							<td>
-								<a href="/SecuLDAP/groupmanager/removeUserFromGroup?groupName=${g.groupName}&fullName=${person.fullName}" 
-								onclick="<c:if test="${fn:length(g.groupMembers) <= 1}">alert('Impossible de supprimer le dernier membre d\'un groupe !')</c:if>">
+								<a href="/SecuLDAP/groupmanager/removeUserFromGroup?groupName=${g.groupName}&fullName=${person.fullName}">
 									<img src="/SecuLDAP/resources/design/img/remove_user.png"></img>
 								</a>			
 							</td>

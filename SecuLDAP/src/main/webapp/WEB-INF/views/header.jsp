@@ -4,7 +4,7 @@
   <div class="container">
     <div class="navbar-collapse collapse navbar-center">
       <ul class="nav navbar-nav">
-      	<li><a class="navbar-brand" href="#"><strong>Annuaire LDAP</strong></a></li>
+      	<li><a class="navbar-brand" href="#"><strong>LDAP</strong></a></li>
       	<s:authorize ifAnyGranted="ROLE_ADMIN">
 	      	<li><a href="/SecuLDAP/admin/userManagement"><span class="glyphicon glyphicon-th"></span> Gestion des utilisateurs</a></li>
 	        <li><a href="/SecuLDAP/admin/groupManagement"><span class="glyphicon glyphicon-tasks"></span> Gestion des groupes</a></li>
@@ -17,7 +17,7 @@
 	      	<li><a href="/SecuLDAP/helpdesk/addUser"><span class="glyphicon glyphicon-plus"></span> Création d'un utilisateur</a></li>
         </s:authorize> 
         <s:authorize ifAnyGranted="ROLE_GROUPMANAGER">
-	        <li><a href="/SecuLDAP/groupmanager/groupManagement"><span class="glyphicon glyphicon-tasks"></span> Gestion des groupes</a></li>
+	        <li><a href="/SecuLDAP/groupmanager"><span class="glyphicon glyphicon-tasks"></span> Gestion des groupes</a></li>
 	        <li><a href="/SecuLDAP/groupmanager/addGroup"><span class="glyphicon glyphicon-plus-sign"></span> Création d'un groupe</a></li> 
         </s:authorize>           
       </ul>

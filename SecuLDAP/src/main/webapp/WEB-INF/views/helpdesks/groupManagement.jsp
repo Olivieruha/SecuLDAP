@@ -15,12 +15,12 @@
 	<br/>
 	<c:forEach items="${listGroup}" var="group">
 		<h4 class="text-muted">&nbsp;&nbsp;Groupe ${group.groupName}</h4>
-		<a href="/SecuLDAP/helpdesk/addUserToGroup?groupName=${group.groupName}">&nbsp;&nbsp;&nbsp;Ajouter un membre</a>
+		<a href="/SecuLDAP/helpdesk/addUserToGroup?groupName=${group.groupName}" style="text-decoration:none">&nbsp;&nbsp;&nbsp;Ajouter un membre</a>
 		<table class="table table-hover table-condensed">
 			<tr>
-				<th>Utilisateur</th>
-				<th>Nom de famille</th>
-				<th>Supprimer du groupe</th>
+				<th style="width:33%;">Utilisateur</th>
+				<th style="width:33%;">Nom de famille</th>
+				<th style="width:33%;">Supprimer du groupe</th>
 			</tr>
 			<c:forEach items="${group.groupMembers}" var="member">
 				<c:if test="${member.fullName!='system administrator'}">			
@@ -28,8 +28,7 @@
 					<td>${member.fullName}</td>
 					<td>${member.lastName}</td>
 					<td>
-						<a href="/SecuLDAP/helpdesk/removeUserFromGroup?groupName=${group.groupName}&fullName=${member.fullName}" 
-							onclick="<c:if test="${fn:length(group.groupMembers) <= 1}">alert('Impossible de supprimer le dernier membre d\'un groupe !')</c:if>">
+						<a href="/SecuLDAP/helpdesk/removeUserFromGroup?groupName=${group.groupName}&fullName=${member.fullName}">
 							<img src="/SecuLDAP/resources/design/img/remove_user.png"></img>						
 						</a>
 					</td>

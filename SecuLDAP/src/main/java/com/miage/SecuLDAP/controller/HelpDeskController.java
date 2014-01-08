@@ -146,33 +146,6 @@ public class HelpDeskController {
 	}
 	
 	/**
-	 * Permet du supprimer un utilisateur de l'annuaire (le supprime également de tous les groupes dans lesquelles il est présent)
-	 * @param person L'utilisateur en question
-	 * @return La redirection vers la gestion des utilisateurs
-	 */
-	/*@RequestMapping(value="/helpdesk/deleteUser", method=RequestMethod.GET)
-	public ModelAndView deleteUser(Person person) {
-		List<Group> listGroup = groupService.findAllGroup();
-		for(Group group : listGroup) {
-			// Si c'est le dernier membre d'un groupe, on empêche la suppression, on affiche un message d'erreur et on quitte
-			if(group.getGroupMembers().contains(person) && group.getGroupMembers().size() <= 1) {
-				String onlyGroupMemberMessage = person.getFullName() +" est le seul membre du groupe " + group.getGroupName();
-				return new ModelAndView("redirect:/helpdesk/userManagement").addObject("onlyGroupMemberMessage", onlyGroupMemberMessage);
-			}			
-		}
-		// Si on est arrivé ici, c'est que la personne à supprimer n'est l'unique membre d'aucun groupe
-		for(Group group : listGroup) {
-			if(group.getGroupMembers().contains(person)) {
-				group.getGroupMembers().remove(person); // On retire la personne des groupes où elle est présente
-				groupService.updateGroup(group);
-			}
-		}
-		// Suppression de la personne
-		personService.deletePerson(person);
-		return new ModelAndView("redirect:/helpdesk/userManagement");
-	}*/
-	
-	/**
 	 * Permet de réinitialiser le mot de passe d'un utilisateur 
 	 * @param person L'utilisateur en question
 	 * @return La redirection vers la gestion des utilisateurs
@@ -234,11 +207,7 @@ public class HelpDeskController {
 	public ModelAndView removeUserFromGroup(HttpServletRequest request) {
 		// Récupération de la personne à supprimer et du groupe concerné
 		Group group = groupService.findByPrimaryKey(request.getParameter("groupName"));
-		Person person = personService.findByPrimaryKey(request.getParameter("fullName"));
-		// Si il n'y a qu'un seul membre dans le groupe, on empêche la suppression de la personne
-		if(group.getGroupMembers().size() <= 1) {
-			return new ModelAndView("redirect:/helpdesk/groupManagement");
-		}	
+		Person person = personService.findByPrimaryKey(request.getParameter("fullName"));	
 		// Suppression de la persone et mise à jour du groupe
 		group.getGroupMembers().remove(person);
 		groupService.updateGroup(group);

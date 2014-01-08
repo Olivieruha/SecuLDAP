@@ -18,11 +18,10 @@
 	
 	<table class="table table-hover">
 		<tr>
-			<th>Utilisateur</th>
-			<th>Nom de famille</th>
-			<th>Modifier</th>
-			<!--<th>Supprimer</th>-->
-			<th>Réinit. mot de passe</th>
+			<th style="width:25%;">Utilisateur</th>
+			<th style="width:25%;">Nom de famille</th>
+			<th style="width:25%;">Modifier</th>
+			<th style="width:25%;">Réinit. mot de passe</th>
 		</tr>
 		<c:forEach items="${listPerson}" var="person">
 			<c:if test="${person.fullName!='system administrator'}">			
