@@ -1,4 +1,5 @@
 <!-- Fixed navbar -->
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="s" %>
 <div class="navbar navbar-inverse navbar-fixed-top">
   <div class="container">
     <div class="navbar-header">
@@ -18,6 +19,7 @@
         <li><a href="/SecuLDAP/admin/addGroup">Création d'un groupe</a></li>            
       </ul>
       <ul class="nav navbar-nav navbar-right">
+      	<li><a href="#"><s:authentication property="principal.username"/></a></li>
         <li><a href="<c:url value="/j_spring_security_logout" />">Se déconnecter</a></li>
      </ul>
    </div>
