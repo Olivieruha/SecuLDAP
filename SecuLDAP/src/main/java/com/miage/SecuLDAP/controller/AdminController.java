@@ -133,8 +133,8 @@ public class AdminController {
 	
 	/**
 	 * Permet de supprimer un utilisateur de l'annuaire
-	 * @param person 
-	 * @return
+	 * @param person La personne à supprimer
+	 * @return La redirection vers la gestion des utilisateurs
 	 */
 	@RequestMapping(value="/admin/deleteUser", method=RequestMethod.GET)
 	public ModelAndView deleteUser(Person person) {
