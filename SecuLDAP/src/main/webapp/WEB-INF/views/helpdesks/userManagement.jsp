@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ include file="helpdeskheader.jsp" %>
+<%@ include file="../header.jsp" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -14,7 +14,6 @@
 <body>
 	<br/>
 	<h4 class="text-muted">&nbsp;Liste des utilisateurs :</h4>
-	<a href="/SecuLDAP/helpdesk/addUser">&nbsp;Ajouter un utilisateur</a>
 	<c:if test="${not empty param.onlyGroupMemberMessage}"><h5 class="alert alert-danger text-center">${param.onlyGroupMemberMessage} : impossible de le supprimer !</h5></c:if>
 	
 	<table class="table table-hover">
