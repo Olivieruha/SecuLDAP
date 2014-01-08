@@ -51,7 +51,7 @@ public class GroupManagerController {
 		Person person = personService.findByPrimaryKey(request.getParameter("fullName"));
 		// Si il n'y a qu'un seul membre dans le groupe, on empêche la suppression de la personne
 		if(group.getGroupMembers().size() <= 1) {
-			return new ModelAndView("redirect:/admin");
+			return new ModelAndView("redirect:/groupmanager");
 		}	
 		// Suppression de la persone et mise à jour du groupe
 		group.getGroupMembers().remove(person);
