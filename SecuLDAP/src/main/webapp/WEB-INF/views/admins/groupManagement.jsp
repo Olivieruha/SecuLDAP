@@ -17,12 +17,21 @@
 		<script src="/SecuLDAP/resources/design/js/contenu.js"></script>
     </head>
     <body>
-		<br/>
-			<c:forEach items="${groups}" var="group">
-				<br/>
-				<h4 class="text-muted">&nbsp;&nbsp;Groupe ${group.groupName}</h4>
-				<hr/>
-				<table class="table table-hover table-condensed">	
+		<c:forEach items="${groups}" var="group">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="text-muted">&nbsp;&nbsp;Groupe ${group.groupName}</h4>
+					<form action="/SecuLDAP/admin/addUserToGroup" method="POST">	
+						<input type="hidden" name="groupName" value="${group.groupName}" />	
+						<button type="submit" role="button" class="btn btn-primary btn-xs">Ajouter un membre</button>
+					</form>	
+					<form action="/SecuLDAP/admin/deleteGroup" method="POST">	
+						<input type="hidden" name="groupName" value="${group.groupName}" />	
+						<c:if test="${group.groupName !='admin' and group.groupName !='helpdesk' and group.groupName !='groupmanager'}"><button type="submit" role="button" class="customer btn btn-danger btn-xs">Supprimer le groupe</button></c:if>
+					</form>	
+				</div>
+				<div class="panel-body">			
+				<table class="table table-hover table-striped table-condensed">	
 					<thead>
 						<tr>
 							<th>Utilisateur</th>
@@ -44,16 +53,8 @@
 						</c:forEach>	
 					</tbody>
 				</table>
-				<table>
-					<form action="/SecuLDAP/admin/deleteGroup" method="POST">	
-						<input type="hidden" name="groupName" value="${group.groupName}" />	
-						<c:if test="${group.groupName !='admin' and group.groupName !='helpdesk' and group.groupName !='groupmanager'}"><button type="submit" role="button" class="customer btn btn-danger btn-xs">Supprimer le groupe</button></c:if>
-					</form>		
-					<form action="/SecuLDAP/admin/addUserToGroup" method="POST">	
-						<input type="hidden" name="groupName" value="${group.groupName}" />	
-						<button type="submit" role="button" class="btn btn-primary btn-xs">Ajouter un membre</button>
-					</form>		
-				</table>
-			</c:forEach>	
+				</div>	
+			</div>
+		</c:forEach>	
 	</body>
 </html>

@@ -13,13 +13,13 @@
     </div>
     <div class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-      	<li><a href="/SecuLDAP/admin/userManagement">Gestion des utilisateurs</a></li>
-        <li><a href="/SecuLDAP/admin/groupManagement">Gestion des groupes</a></li>
-      	<li><a href="/SecuLDAP/admin/addUser">Création d'un utilisateur</a></li>
-        <li><a href="/SecuLDAP/admin/addGroup">Création d'un groupe</a></li>            
+      	<li><a href="/SecuLDAP/admin/userManagement"><span class="glyphicon glyphicon-th"></span> Gestion des utilisateurs</a></li>
+        <li><a href="/SecuLDAP/admin/groupManagement"><span class="glyphicon glyphicon-tasks"></span> Gestion des groupes</a></li>
+      	<li><a href="/SecuLDAP/admin/addUser"><span class="glyphicon glyphicon-plus"></span> Création d'un utilisateur</a></li>
+        <li><a href="/SecuLDAP/admin/addGroup"><span class="glyphicon glyphicon-plus-sign"></span> Création d'un groupe</a></li>            
       </ul>
       <ul class="nav navbar-nav navbar-right">
-      	<li><a href="#"><s:authentication property="principal.username"/></a></li>
+      	<li><a href="#"><span class="glyphicon glyphicon-user"></span> <s:authentication property="principal.username"/></a></li>
         <li><a href="<c:url value="/j_spring_security_logout" />">Se déconnecter</a></li>
      </ul>
    </div>

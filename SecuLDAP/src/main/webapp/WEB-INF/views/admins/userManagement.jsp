@@ -12,12 +12,11 @@
 	<link rel="stylesheet" type="text/css" href="/SecuLDAP/resources/design/css/bootstrap.min.css"/>
 </head>
 <body>
-	<br/>
-	<h4 class="text-muted">&nbsp;Liste des utilisateurs :</h4>
-	<a href="/SecuLDAP/admin/addUser">&nbsp;Ajouter un utilisateur</a>
-	<c:if test="${not empty param.onlyGroupMemberMessage}"><h5 class="alert alert-danger text-center">${param.onlyGroupMemberMessage} : impossible de le supprimer !</h5></c:if>
-	
-	<table class="table table-hover">
+	<div class="panel panel-default">
+	<div class="panel-heading">
+		<h4 class="text-muted">Liste des utilisateurs :</h4>
+	</div>
+	<table class="table table-hover table-striped table-condensed">
 		<tr>
 			<th>Utilisateur</th>
 			<th>Nom de famille</th>
@@ -49,6 +48,7 @@
 			</c:if>	
 		</c:forEach>
 	</table>
+	</div>	
 	
 	<script src="/SecuLDAP/resources/design/js/bootstrap.min.js"></script> 
 </body>
